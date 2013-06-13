@@ -1,0 +1,132 @@
+{% extends "page.html" %}{% load static %}
+{% block header %}
+<script src="{% get_static_prefix %}js/message_stream.js"></script>
+<script src="{% get_static_prefix %}js/live_graph.js"></script>
+<script src="{% get_static_prefix %}js/jquery.flot.js"></script>
+<script src="{% get_static_prefix %}js/excanvas.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    var data1 = [];
+    var totalPoints = 300;
+    
+    function GetData() {        
+        data1.shift();
+    
+        while (data1.length < totalPoints) {
+            var prev = data1.length > 0 ? data1[data1.length - 1] : 50;
+            var y = prev + Math.random() * 10 - 5;
+            y = y < 0 ? 0 : (y > 100 ? 100 : y);
+            
+            data1.push(y);
+        }
+        
+        var result = [];
+        
+        for (var i = 0; i < data1.length; ++i){            
+            result.push([i, data1[i]])
+        }
+
+        return result;
+    }
+    var updateInterval = 100;        
+
+    var plot = $.plot($("#example-section10 #flotcontainer"), 
+            [ 
+              GetData()
+            ], 
+            {
+                series: {
+                    shadowSize: 0
+                }, 
+                yaxis: {
+                    min: 0, max: 100, ticks:4
+                },
+                xaxis: {
+                    show: false
+                },
+                grid:{
+                    backgroundColor: { colors: ["#FFFFFF", "#FFFFFF"] }
+                }
+            }
+    );  
+    
+    function update() {
+        plot.setData([GetData()]);                
+        plot.draw();        
+        setTimeout(update, updateInterval);
+    }
+    update();
+});
+</script>
+
+
+{% endblock %}
+{% block main %}
+      <div class="row">
+        <div class="span6" id="livegraph">
+            <h2>LiveGraph</h2>
+            <div id="example-section10">
+			    <div id="flotcontainer" style="width: 600px;height:300px; text-align: center; margin:0 auto;">
+			    </div>
+		     </div>
+		     <h2>Tickers</h2>
+			    <!--div class="row"-->
+        <div class="span6">
+            <div class="btn-group btn-group-vertical">
+            <p>
+                <input type="button" id = "lost" class="span4 btn btn-danger btn-large active" value= "LOST"/>
+                <span id="lost-badge" class="offset1 badge badge-info">0</span>
+            </p>
+            <p>
+                <input type="button" id="speed_up" class="span4 btn btn-success btn-large active"value="SPEED UP"/>
+                <span id="speed_up-badge" class="offset1 badge badge-info">0</span>
+            </p>
+            <p>
+                <input type="button" id="slow_down" class="span4 btn btn-warning btn-large active"value="SLOW DOWN"/>
+                <span id="slow_down-badge" class="offset1 badge badge-info">0</span>
+            </p>
+            <p>
+                <!--  input type="button" id="question" class="span4 btn btn-inverse btn-large active"   value="QUESTION"/>
+                <span id="question-badge" class="offset1 badge badge-info">0</span-->
+                <textarea id="questionbox" maxlength="1000" class="span4"></textarea>
+            </p>
+            <p>
+            <div class="span4">
+            <button type="button" id="qn-submit" class="btn-primary pull-right" style="display:none">Ask</button>
+             </div>
+            </p>
+            </div>
+        </div>
+      <!--/div-->
+      <script src="{% get_static_prefix %}js/teach2me.js"></script>
+        </div>
+        <div class="span5 offset1 columns">
+        <h2>LiveStream</h2>
+        <table class="table table-hover table-striped"">
+            <thead>
+                <tr>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody id="messages">
+                <!-- tr>
+                    <td>This is a Sample Message<td>
+                </tr>
+                <tr>
+                    <td>This is Sample Message<td>
+                </tr>
+                <tr>
+                    <td>This is Sample Message<td>
+                </tr>
+                <tr>
+                    <td>This is Sample Message<td>
+                </tr>
+                <tr>
+                    <td>This is Sample Message<td>
+                </tr-->
+            </tbody>
+        </table>
+        </div>
+      </div>
+      
+{% endblock %}

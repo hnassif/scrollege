@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Scout</title>
+<link rel="icon" type="image/ico" href="../../images/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../stylesheets/main.css"/>
+<link rel="image_src" type="image/png" href="../../images/placeholder.png"/>
+<link type="image/png" rel="image_src" href="logo.png" >
+</head>
+
+<body>
+<div id= "container">
+	
+<div id="header">
+	<h1>
+		<a class="logo" href="/home"> Scout </a> 
+		</h1>
+	<div id="nav">
+			<% if member_signed_in? %> 
+			<a class="btn" href="/member"> My Profile </a>
+				<%else%> 
+				<%=link_to "Log In", new_member_session_path, :method=> :get, :class => 'btn' %> <%end%>
+		 </div>
+</div>
+
+<div id="hero">
+	<p> Verify Your Offline Identity. </p>
+			<%=link_to "Sign Up", new_member_registration_path, :method=> :get, :class => 'btn' %> 
+</div>
+
+<div id="top_features">
+
+<div class="feature accept">
+	<div id="pic1"> </div>
+		<div class="text">
+			<h3> Apply </h3>
+		<p> Applying for the Scout Badge is fast and secure. If you pass our background screening process, you'll receive a portable badge that attests to your general standing according to the law. </br></br> </p>
+		</div></div>
+
+<div class="feature recurring">
+		<div id="pic2"> </div>
+		<div class="text">
+			<h3> Share </h3>
+		<p> It's easy to share the Scout Badge. Share it on your listing, profile, or resume. You can use the badge anywhere, anytime. And don't worry: you'll be the only person who'll be able to use it. </p>
+			</div> </div>
+			
+<div class="feature2">
+			<div id="pic3"> </div>
+		<div class="text">
+			<h3>Benefit </h3>
+		<p> Customers care about the safety of their transactions. In addition to gaining repute among the current marketplace, you access a new market of customers who only do business with screened sellers. </p>
+			</div> </div>
+			</div>
+
+<div id="headline">
+	Why You'll Love Using Scout </div>
+
+<div id="moreinfo" class="box">
+	<div id="info">
+		<div class="part screeningprocess">
+			<div class="title">
+			<h2> A Thorough Screening Process </h2>
+			<p> We've developed a rigorous screening process to make sure our background checks are as accurate as possible. We conduct a full Social Security Number Trace and search for criminal records at the county, state, and federal level. </p> 
+			<p> If an individual is a Scout Badge owner, you can trust that he has a clean record according to the law. </p> </div>
+			<%=image_tag("screeningprocess.png", :alt => "Screening Process") %> 
+			</div>
+			
+		<div class="part shareit odd">
+			<div class="inner">
+				<div class="title">
+					<h2>Share It Anywhere </h2>
+			<p>It's easy for you to share your approved Scout Badge anywhere, anytime. Share it on your listing, profile, or resume. </p>
+			<p> If a business supports Scout Integration, it's fast and secure for you to incorporate your Scout credentials. This bolsters your reputation and helps you attract more customers.</p> </div>
+			
+			<%=image_tag("shareit.png", :alt => "Screening Process") %> 	
+			</div> </div>
+			
+		<div class="part security">
+			<div class="title">
+				<h2> Security is Our Priority </h2>
+				<p> Background checks deal with sensitive information. We work hard to ensure our security system is bullet-proof. Once you share your personal information with us, we make sure it never gets out. After you receive your badge, nobody else is able to use it. </p> </div>
+				<%=image_tag("security.png", :alt => "Screening Process") %>  </div>
+					
+			<div class="part transparent odd">
+				<div class="inner">
+					<div class="title">
+						<h2>Transparent and Liable </h2>
+							<p>We don't hide any of our policies and we promise to take  full responsibility for any issue that comes up. Scout makes sure to abide by state and federal laws, including the Fair Credit Reporting Act.</p> </div>
+					
+					<%=image_tag("transparent.png", :alt => "Screening Process") %> 
+					</div> </div>
+					</div> </div>
+</div>
+					
+<div id="footer" > <span>
+		contact@heyscout.com </span> <span> &copy 2013</span> </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends "page.html" %}{% load static %}
+{% block header %}
+<script src="{% get_static_prefix %}js/message_stream.js"></script>
+{% endblock %}
+{% block main %}
+      <div class="row">
+        <div class="span7 offset1 columns">
+        <h2>LiveStream</h2>
+        <table class="table table-hover table-striped"">
+            <thead>
+                <tr>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody id="messages">
+                <!-- tr>
+                    <td>This is a Sample Message<td>
+                </tr>
+                <tr>
+                    <td>This is Sample Message<td>
+                </tr>
+                <tr>
+                    <td>This is Sample Message<td>
+                </tr>
+                <tr>
+                    <td>This is Sample Message<td>
+                </tr>
+                <tr>
+                    <td>This is Sample Message<td>
+                </tr-->
+            </tbody>
+        </table>
+        </div>
+      </div>
+{% endblock %}

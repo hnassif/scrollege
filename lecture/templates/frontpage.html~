@@ -1,0 +1,17 @@
+{% extends "page.html" %}{% load static %}
+{% block main %}
+      <div class="row">
+        <div class="span6 offset3 ">
+          <form id="item_form" action="/" class="form-stacked"  method="post">
+            {% csrf_token %}
+            {% include "errors.html" %}
+            {% for field in form.visible_fields %}
+              {% include "field.html" %}
+            {% endfor %}
+            <div class="actions">
+              <input class="btn btn-primary " id="user_submit" name="commit" type="submit" value="Register">
+            </div>
+            </form>
+        </div>
+      </div>
+{% endblock %}

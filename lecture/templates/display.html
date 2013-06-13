@@ -1,0 +1,12 @@
+{% extends "page.html" %}
+{% block main %}
+      <div class="row">
+        <div class="span6 columns">
+	<table class="table">
+	{% for item in items %}
+	<tr><td>{{item.item_name}}</td><td>{{item.item_type}}</td></tr>
+	{% endfor %}
+	</table>
+        </div>
+      </div> 
+{% endblock %}
