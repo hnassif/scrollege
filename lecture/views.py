@@ -68,14 +68,19 @@ def savingItem(request):
 				item_owner=request.user,
 				item_description= form.cleaned_data['item_description'],
             			).save()
-            
+
 	else:
 		form=ItemForm()
         return render_to_response('frontpage.html',{'form':form},context_instance=RequestContext(request))
-	
 
 
 def home(request):
+    if request.user.is_authenticated():
+        savingItem(request)
+    else:
+        return render_to_response('homepage.html')
+
+def register(request):
     if request.user.is_authenticated():
 	return savingItem(request)
     user = None
