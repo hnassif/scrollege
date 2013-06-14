@@ -22,7 +22,7 @@
          </div>
          <div class="span6 columns">
          <h2>Already a user</h2>
-         <form id="signin_form" accept-charset="UTF-8" action="{% url sign_in %}" class = "form-stacked" method="post">
+         <form id="signin_form" accept-charset="UTF-8" action="{% url "sign_in" %}" class = "form-stacked" method="post">
          {% csrf_token %}
          {% for field in signinform.visible_fields %}
               {% include "field.html" %}
