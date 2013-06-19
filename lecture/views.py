@@ -15,10 +15,15 @@ from forms import RegForm, SignInForm, ItemForm
 from models import Item
 
 
-def showItems(request):
-    q = Item.objects.all()
-    return render_to_response('display.html', {'items': q, 'user': request.user})
+def home(request):
+    q = Item.objects.all().reverse()
+    return render_to_response('homepage_default.html', {'items': q, 'user': request.user})
 
+def my_items(request):
+    list_of_my_items = Item.objects.filter(item_owner=User.objects.filter(id=request.user.id)[0])
+    print list_of_my_items
+    print "request.user is" + str(request.user.id)
+    return render_to_response('my_items.html', {'items': list_of_my_items, 'user': request.user})
 
 def sign_in(request):
     if request.user.is_authenticated():
@@ -60,34 +65,28 @@ def sign_out(request):
     return HttpResponseRedirect('/')
 
 
-def savingItem(request):
+def post_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid():
             Item(
                 item_name=form.cleaned_data['item_name'],
                 item_type=form.cleaned_data['item_type'],
-                item_image=request.FILES['item_image'],
+                # item_image=request.FILES['item_image'],
                 item_owner=request.user,
                 item_description=form.cleaned_data['item_description'],
             ).save()
+            return my_items(request)
 
     else:
         form = ItemForm()
-    return render_to_response('frontpage.html', {'form': form, 'user': request.user}, context_instance=RequestContext(request))
+    return render_to_response('post_item.html', {'form': form, 'user': request.user}, context_instance=RequestContext(request))
 
-
-def home(request):
-    if request.user.is_authenticated():
-        return savingItem(request)
-    else:
-        return render_to_response('homepage.html',
-                                  {'user': request.user})
 
 
 def register(request):
     if request.user.is_authenticated():
-        return savingItem(request)
+        return post_item(request)
     user = None
     signinform = SignInForm()
     if request.method == 'POST':
@@ -124,6 +123,4 @@ def register(request):
         context_instance=RequestContext(request)
     )
 
-#@login_required(redirect_field_name='/')
-# def choose_class(request):
-#
+

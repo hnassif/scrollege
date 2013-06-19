@@ -10,21 +10,9 @@ urlpatterns = patterns('',
                        url(r'^register$',views.register, name='register'),
                        url(r'^sign_in$', views.sign_in, name='sign_in'),
                        url(r'^sign_out$', views.sign_out, name='sign_out'),
-		       url(r'^display$', views.showItems),
-                       #url(r'^post_data', views.post_data),
-                       #url(r'^mystats', views.session_stats),
-                       #url(r'^prof', views.prof_graph),
-                       #url(r'^post_qn', views.rec_qn),
-                       #url(r'^stream$', views.stream),
-                       #url(r'^stream_qn$', views.stream_qn),
-                       #url(r'^graph_data$', views.graph_data),
-                       # url(r'^teach2me/', include('teach2me.foo.urls')),
-
-                       # Uncomment the admin/doc line below to enable admin documentation:
-                       # url(r'^admin/doc/',
-                       # include('django.contrib.admindocs.urls')),
-
-                       # Uncomment the next line to enable the admin:
+                       url(r'^post_item$', views.post_item, name='post_item'),
+                       url(r'^my_items$',views.my_items, name='my_items'),
                        url(r'^admin/', include(admin.site.urls)),
+
 
                        )

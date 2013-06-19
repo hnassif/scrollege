@@ -9,7 +9,7 @@
       </div>
       <div class="row">
         <div class="span6 columns">
-          <form id="user_form" accept-charset="UTF-8" action="/" class="form-stacked"  method="post">
+          <form id="user_form" accept-charset="UTF-8" action="{% url "register" %}" class="form-stacked"  method="post">
             {% csrf_token %}
             {% include "errors.html" %}
             {% for field in form.visible_fields %}

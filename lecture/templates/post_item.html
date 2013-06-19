@@ -1,0 +1,17 @@
+{% extends "page.html" %}
+{% block main %}
+<form accept-charset="UTF-8" action="{% url "post_item" %}" class="form-stacked" method="post">
+	{% csrf_token %}
+	{% if form.is_bound and not form.is_valid %}
+	<div class="alert-message block-message error">
+		<div class="errors">
+			{% include "errors.html" %}
+		</div>
+	</div>
+	{% endif %}
+	{% for field in form %}{% include "field.html" %}{% endfor %}
+	<div class="actions">
+		<input class="btn btn-primary" name="commit" type="submit" value="post">
+	</div>
+</form>
+{% endblock %}
