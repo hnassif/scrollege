@@ -1,12 +1,56 @@
 {% extends "page.html" %}
 {% block main %}
-      <div class="row">
-        <div class="span6 columns">
-	<table class="table">
-	{% for item in items %}
-	<tr><td>{{item.item_name}}</td><td>{{item.item_type}}</td></tr>
-	{% endfor %}
-	</table>
-        </div>
-      </div> 
+
+	<!-- single line -->
+<div class="row-fluid">
+	<!-- single box-->
+	<div class="span4">
+		<div class="row-fluid">
+			<div class="span4">
+				<img src="http://placehold.it/100x100" class="hoverImages"/>
+			</div>
+			<div class="span6 text-fix">
+				<b>Name: </b>A good name
+				<br/>
+				<b>Type: </b>Book
+				<br/><!--max of 100-106 char -->
+				This is an aweosme book. I really found it interesting. 
+				YOu should get yourself a copy.This is an aweosme
+			</div>
+		</div>
+	</div><!--end single box -->
+		<!-- single box-->
+	<div class="span4">
+		<div class="row-fluid">
+			<div class="span4">
+				<img src="http://placehold.it/100x100" class="hoverImages"/>
+			</div>
+			<div class="span6 text-fix">
+				<b>Name: </b>A good name
+				<br/>
+				<b>Type: </b>Book
+				<br/><!--max of 100-106 char -->
+				This is an aweosme book. I really found it interesting. 
+				YOu should get yourself a copy.This is an aweosme
+			</div>
+		</div>
+	</div><!--end single box -->
+		<!-- single box-->
+	<div class="span4">
+		<div class="row-fluid">
+			<div class="span4">
+				<img src="http://placehold.it/100x100" class="hoverImages"/>
+			</div>
+			<div class="span6 text-fix">
+				<b>Name: </b>A good name
+				<br/>
+				<b>Type: </b>Book
+				<br/><!--max of 100-106 char -->
+				This is an aweosme book. I really found it interesting. 
+				YOu should get yourself a copy.This is an aweosme
+			</div>
+		</div>
+	</div><!--end single box -->
+
+</div><!--end single line -->
 {% endblock %}

@@ -19,12 +19,13 @@ class Course(models.Model):
 
 
 class Item(models.Model):
-	item_name= models.CharField(max_length=200)
-	item_type=models.CharField(max_length=10)
-	# item_image=models.ImageField(upload_to=MEDIAFILES_DIRS)
-	item_owner=models.ForeignKey(User)
-	item_description= models.CharField(max_length=2000)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    item_name= models.CharField(max_length=200)
+    item_type=models.CharField(max_length=10)
+    # item_image=models.ImageField(upload_to=MEDIAFILES_DIRS)
+    item_owner=models.ForeignKey(User)
+    item_description= models.CharField(max_length=2000)
 
-	def __str__(self):
-        	return str(self.item_name) + ', ' + str(self.item_type)
+    def __str__(self):
+            return str(self.item_name) + ', ' + str(self.item_type)
 

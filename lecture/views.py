@@ -48,8 +48,6 @@ def sign_in(request):
     else:
         # register
         form = SignInForm()
-# return render_to_response('auth.html',{'state':state, 'username':
-# username})
     return render_to_response(
         'sign_in.html',
         {
