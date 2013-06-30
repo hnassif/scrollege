@@ -1,12 +1,15 @@
 {% extends "page.html" %}
 {% block main %}
-      <div class="row">
-        <div class="span6 columns">
-	<table class="table">
-	{% for item in items %}
-	<tr><td>{{item.item_name}}</td><td>{{item.item_type}}</td></tr>
-	{% endfor %}
-	</table>
-        </div>
-      </div> 
+<div class="row">
+    <div class="span12">
+        <h2 class="text-center">my items</h2>
+    </div>
+    <div class="span6 offset3 columns">
+       <table class="table">
+           {% for item in items %}
+           <tr><td>{{item.item_name}}</td><td>{{item.item_type}}</td></tr>
+           {% endfor %}
+       </table>
+   </div>
+</div> 
 {% endblock %}
