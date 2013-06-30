@@ -9,6 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 # from lecture.models import Session, SessionTransaction, Question
 # import simplejson
 
+try: import simplejson as json
+except ImportError: import json
+
 from django.contrib.auth.decorators import login_required
 
 from forms import RegForm, SignInForm, ItemForm
