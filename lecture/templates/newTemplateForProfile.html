@@ -1,26 +1,7 @@
 {% extends "page.html" %}
 {% block main %}
 
-<!--
-<div class="tabbable"> 
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#myItems" data-toggle="tab">My Items</a></li>
-		<li><a href="#myProfile" data-toggle="tab">My Profile</a></li>
-		<li><a href="#myWatchlist" data-toggle="tab">My Watchlist</a></li>
-	</ul>
-	<div class="tab-content">
-		<div class="tab-pane active" id="myItems">
-			<p>I'm in Section 1.</p>
-		</div>
-		<div class="tab-pane" id="myProfile">
-			<p>Howdy, I'm in Section 2.</p>
-		</div>
-		<div class="tab-pane" id="myWatchlist">
-			<p>Howdy, I'm in Section 3.</p>
-		</div>
-	</div>
-</div>
--->
+
 
 <div class="tabbable"> 
 	<ul id="myTab" class="nav nav-tabs">
@@ -30,161 +11,22 @@
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="myItems">
+
+
+                        <!-- single line mixed images -->
+{% for item in items %}
+        {% if forloop.counter0|divisibleby:"3"%}
+<div class="row-fluid topspace"> <!-- begin single line -->
+        {% endif %}
+        {% include "item.html" %}
+        {% if forloop.counter|divisibleby:"3" or forloop.last%}
+</div><!--end single line -->
+        {% endif %}
+        {% empty %}
+        <h3 class="text-center">Sorry, no items in the database. Be the first to post!</h3>
+{% endfor %}
 			<!-- single line -->
-<div class="row-fluid">
-        <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
-                <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
-                <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
 
-</div><!--end single line -->
-<!-- single line -->
-<div class="row-fluid">
-        <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
-                <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
-                <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
-
-</div><!--end single line -->
-<!-- single line -->
-<div class="row-fluid">
-        <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
-                <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
-                <!-- single box-->
-        <div class="span4">
-                <div class="row-fluid">
-                        <div class="span4">
-                                <img src="http://placehold.it/100x100" class="hoverImages"/>
-                        </div>
-                        <div class="span6 text-fix">
-                                <b>Name: </b>A good name
-                                <br/>
-                                <b>Type: </b>Book
-                                <br/><!--max of 100-106 char -->
-                                This is an aweosme book. I really found it interesting. 
-                                YOu should get yourself a copy.This is an aweosme
-                        </div>
-                </div>
-        </div><!--end single box -->
-</div><!--end single line -->
 </div>
 		<div class="tab-pane" id="myProfile">
 			<div class="clearfix">
