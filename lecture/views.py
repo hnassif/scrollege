@@ -19,7 +19,7 @@ from models import Item
 
 
 def home(request):
-    q = Item.objects.all().reverse()
+    q = Item.objects.all().reverse()[:20]
     return render_to_response('homepage_default.html', {'items': q, 'user': request.user})
 
 def my_items(request):

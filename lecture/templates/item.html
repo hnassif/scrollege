@@ -7,13 +7,16 @@
                 <a href="#myModal" role="button" data-toggle="modal"><img alt="item image" src="http://placehold.it/100x100" class="hoverImages"/></a>
             </div>
             <div class="span6 text-fix">
-                <strong>Name: </strong>{{item.item_name}}
+                <strong>Name: </strong>{{item.name}}
                 <br/>
-                <strong>Type: </strong>{{item.item_type}}
+                {% for tag in item.tags.all %}
+                {% if forloop.first%}<strong>Type: </strong>{% endif%}
+                {% if forloop.last %} {{ tag.name }} {% else %} {{ tag.name }}, {% endif %}
+                {% endfor %}
                 <br/><!--max of 100-106 char -->
-                {{item.item_description|truncatechars:103}}
+                {{item.description|truncatechars:103}}
                 <div>
-                    <strong>{{item.item_owner.email}}</strong>
+                    <strong>{{item.owner.email}}</strong>
                     <img alt="gravatar" src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=20"/>
                 </div>
                 
@@ -26,13 +29,16 @@
     <div class="span4 well">
         <div class="row-fluid">
             <div class="span8 text-fix">
-                <strong>Name: </strong>{{item.item_name}}
+                <strong>Name: </strong>{{item.name}}
                 <br/>
-                <strong>Type: </strong>{{item.item_type}}
+                {% for tag in item.tags.all %}
+                {% if forloop.first%}<strong>Type: </strong>{% endif%}
+                {% if forloop.last %} {{ tag.name }} {% else %} {{ tag.name }}, {% endif %}
+                {% endfor %}
                 <br/><!--max of 100-106 char -->
-                {{item.item_description|truncatechars:103}}
+                {{item.description|truncatechars:103}}
                 <div>
-                    <strong>{{item.item_owner.email}}</strong>
+                    <strong>{{item.owner.email}}</strong>
                     <img alt="gravatar" src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=20"/>
                 </div>
             </div>

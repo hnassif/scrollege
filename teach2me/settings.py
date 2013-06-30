@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'lecture',
+    'taggit',
 )
 
 TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, '../lecture/templates'),)

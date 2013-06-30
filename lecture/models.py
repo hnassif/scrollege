@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from teach2me.settings import MEDIAFILES_DIRS
+from taggit.managers import TaggableManager
+
 
 # Create your models here.
 
@@ -20,14 +22,14 @@ class Course(models.Model):
 
 class Item(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
-    item_name= models.CharField(max_length=200)
-    item_type=models.CharField(max_length=10)
-    #item_image=models.ImageField(upload_to=MEDIAFILES_DIRS)
-    item_price=models.CharField(max_length=5)
-    item_price=models.BooleanField(default=True)
-    item_owner=models.ForeignKey(User)
-    item_description= models.CharField(max_length=2000)
+    name= models.CharField(max_length=200)
+    price=models.DecimalField(max_digits=10,decimal_places=2)
+    negotiable = models.BooleanField(default=False)
+    owner=models.ForeignKey(User)
+    description = models.CharField(max_length=2000)
+    tags = TaggableManager()
 
     def __str__(self):
-            return str(self.item_name) + ', ' + str(self.item_type)
+            return str(self.name) + ', ' + str(self.description) + \
+            str(self.tags.all())
 
