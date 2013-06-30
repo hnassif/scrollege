@@ -71,6 +71,8 @@ def post_item(request):
                 item_name=form.cleaned_data['item_name'],
                 item_type=form.cleaned_data['item_type'],
                 # item_image=request.FILES['item_image'],
+                item_price=form.cleaned_data['item_price'],
+                item_negotiable=form.cleaned_data['item_negotiable'],
                 item_owner=request.user,
                 item_description=form.cleaned_data['item_description'],
             ).save()
@@ -122,3 +124,6 @@ def register(request):
     )
 
 
+def testHenry(request):
+    return render_to_response(
+        'newTemplateForProfile.html')

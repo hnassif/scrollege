@@ -69,7 +69,12 @@ class ItemForm(TeachForm):
 		widget= CheckboxSelectMultiple, 
 		choices = (('book', 'Book'), ('electronic', 'Electronic'), ('food', 'Food'))
      )
-
+    item_price= forms.CharField(
+        required= True
+    )
+    item_negotiable= forms.BooleanField(
+        required= True
+    )
 
     item_description= forms.CharField(
         required=False,
