@@ -128,7 +128,7 @@ def register(request):
 
 
 def testHenry(request):
- list_of_my_items = Item.objects.filter(item_owner=User.objects.filter(id=request.user.id)[0])
+ list_of_my_items = Item.objects.filter(owner=request.user)
  print list_of_my_items
  print "request.user is" + str(request.user.id)
  return render_to_response('newTemplateForProfile.html', {'items': list_of_my_items, 'user': request.user})
