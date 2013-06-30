@@ -22,7 +22,9 @@ class Item(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     item_name= models.CharField(max_length=200)
     item_type=models.CharField(max_length=10)
-    # item_image=models.ImageField(upload_to=MEDIAFILES_DIRS)
+    #item_image=models.ImageField(upload_to=MEDIAFILES_DIRS)
+    item_price=models.CharField(max_length=5)
+    item_price=models.BooleanField(default=True)
     item_owner=models.ForeignKey(User)
     item_description= models.CharField(max_length=2000)
 
