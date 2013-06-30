@@ -11,7 +11,8 @@ urlpatterns = patterns('',
                        url(r'^sign_in$', views.sign_in, name='sign_in'),
                        url(r'^sign_out$', views.sign_out, name='sign_out'),
                        url(r'^post_item$', views.post_item, name='post_item'),
-                       url(r'^my_items$',views.my_items, name='my_items'),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^test$', views.testHenry, name='test'),
+                       url(r'^my_items$',views.testHenry, name='my_items'),
+
                        )
