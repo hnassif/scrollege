@@ -33,3 +33,14 @@ class Item(models.Model):
             return str(self.name) + ', ' + str(self.description) + \
             str(self.tags.all())
 
+
+class Message(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    content = models.CharField(max_length=2000)
+    sender = models.CharField(max_length=200)
+    item_involved = models.CharField(max_length=200)
+    isRead = models.BooleanField(default=False)
+
+    def __str__(self):
+            return 'From : ' +  str(self.sender) + ' Subject : ' + str(self.subject) + ' time : ' + str(self.timestamp)
+        
