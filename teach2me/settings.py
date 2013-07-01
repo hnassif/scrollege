@@ -115,6 +115,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'lecture',
     'taggit',
+    # 'haystack',
 )
 
 TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, '../lecture/templates'),)
@@ -147,3 +148,9 @@ LOGGING = {
         },
     }
 }
+
+try:
+            from local_settings import *
+except ImportError:
+            pass
+

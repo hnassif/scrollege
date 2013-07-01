@@ -14,7 +14,7 @@ except ImportError: import json
 
 from django.contrib.auth.decorators import login_required
 
-from forms import RegForm, SignInForm, ItemForm, PasswordResetForm
+from forms import RegForm, SignInForm, ItemForm, SearchForm, PasswordResetForm
 from models import Item
 
 
@@ -22,8 +22,9 @@ def home(request):
     q = Item.objects.all().reverse()[:20]
     return render_to_response('homepage_default.html', {'items': q, 'user': request.user})
 
+@login_required
 def my_items(request):
-    list_of_my_items = Item.objects.filter(item_owner=User.objects.filter(id=request.user.id)[0])
+    list_of_my_items = Item.objects.filter(owner=User.objects.filter(id=request.user.id)[0])
     print list_of_my_items
     print "request.user is" + str(request.user.id)
     return render_to_response('my_items.html', {'items': list_of_my_items, 'user': request.user})
@@ -65,20 +66,25 @@ def sign_out(request):
     logout(request)
     return HttpResponseRedirect('/')
 
-
+@login_required
 def post_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid():
-            Item(
-                item_name=form.cleaned_data['item_name'],
-                item_type=form.cleaned_data['item_type'],
+            m_tags = form.cleaned_data['item_tags']
+            m = Item(
+                name=form.cleaned_data['item_name'],
+                # type=form.cleaned_data['item_type'],
                 # item_image=request.FILES['item_image'],
-                item_price=form.cleaned_data['item_price'],
-                item_negotiable=form.cleaned_data['item_negotiable'],
-                item_owner=request.user,
-                item_description=form.cleaned_data['item_description'],
-            ).save()
+                price=form.cleaned_data['item_price'],
+                negotiable=form.cleaned_data['item_negotiable'],
+                owner=request.user,
+                description=form.cleaned_data['item_description']
+            )
+            m.save()
+            print "item has been saved with item_id "+str(m.pk)
+            print m_tags
+            m.tags.add(*m_tags)
             return my_items(request)
 
     else:
@@ -133,6 +139,27 @@ def testHenry(request):
  print list_of_my_items
  print "request.user is" + str(request.user.id)
  return render_to_response('newTemplateForProfile.html', {'items': list_of_my_items, 'user': request.user, 'form': form})
+
+def testDavid(request):
+    form = SearchForm()
+    return render_to_response('search.html',{'form':form})
+
+
+def search(request):
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
+        if form.is_valid:
+            print "search form is valid"
+        raw_q = request.GET['q']
+        q = raw_q.strip()
+        items = Item.objects.filter(name__icontains=q) | \
+                Item.objects.filter(description__icontains=q)
+                #  | \
+                # Item.objects.filter(tags__search=q)
+        return render_to_response('search_results.html', {'items':items, 'q':q})
+
+    else:
+        return HttpResponseRedirect('/')
 
 def reset_password(request):
     if request.method == 'POST':
