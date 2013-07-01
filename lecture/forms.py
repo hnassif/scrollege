@@ -85,3 +85,13 @@ class ItemForm(TeachForm):
         required=False,
         label= 'Image (Optional)'
     )
+
+class PasswordResetForm(TeachForm):
+
+   newPassword= forms.CharField(
+        required= True
+    )
+
+   confirmNewPassword= forms.CharField(
+        required= True
+    )

@@ -14,7 +14,7 @@ except ImportError: import json
 
 from django.contrib.auth.decorators import login_required
 
-from forms import RegForm, SignInForm, ItemForm
+from forms import RegForm, SignInForm, ItemForm, PasswordResetForm
 from models import Item
 
 
@@ -129,6 +129,21 @@ def register(request):
 
 def testHenry(request):
  list_of_my_items = Item.objects.filter(owner=request.user)
+ form = PasswordResetForm()
  print list_of_my_items
  print "request.user is" + str(request.user.id)
- return render_to_response('newTemplateForProfile.html', {'items': list_of_my_items, 'user': request.user})
+ return render_to_response('newTemplateForProfile.html', {'items': list_of_my_items, 'user': request.user, 'form': form})
+
+def reset_password(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            new_Password=form.cleaned_data['newPassword']
+            confirm_New_Password=form.cleaned_data['confirmNewPassword']
+            if new_Password == confirm_New_Password:
+                request.user.set_password(newPassword)
+    else:
+        form = PasswordResetForm()
+
+def testMessages(request):
+     return render_to_response('messages.html')

@@ -14,5 +14,5 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^test$', views.testHenry, name='test'),
                        url(r'^my_items$',views.testHenry, name='my_items'),
-
+                       url(r'^messages$',views.testMessages, name='my_messages'),
                        )
