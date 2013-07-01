@@ -1,12 +1,17 @@
 from django import forms
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.forms.widgets import CheckboxSelectMultiple
+from taggit.forms import TagWidget, TagField
 
 class TeachForm(forms.Form):
     def addError(self, message):
         self._errors[NON_FIELD_ERRORS] = self.error_class([message])
 
-
+class SearchForm(forms.Form):
+    q = forms.CharField(
+        required=True,
+        label = 'Search'
+        )
 class RegForm(TeachForm):
     firstname = forms.CharField(
         required=True,
@@ -60,28 +65,36 @@ class SignInForm(TeachForm):
     )
 
 class ItemForm(TeachForm):
+    # def __init__(self, *args, **kwargs):
+    #     super(TeachForm, self).__init__(*args, **kwargs)
+    #     for field in self.fields:
+    #         self.fields[field].widget.attrs['class'] = 'controls'
+    #         print type(self.fields[field].label)
 
     item_name= forms.CharField(
-		required= True
-    )
-    item_type= forms.MultipleChoiceField(
 		required= True,
-		widget= CheckboxSelectMultiple, 
-		choices = (('book', 'Book'), ('electronic', 'Electronic'), ('food', 'Food'))
-     )
-    item_price= forms.CharField(
-        required= True
+        label = 'Name'
+        # attrs={'class':'special'}
     )
-    item_negotiable= forms.BooleanField(
-        required= True
+    item_tags = TagField(
+        label= 'Tags',
+        required = False,
+        # widget = TagWidget((attrs={'placeholder': 'Comma separated'}),)
     )
-
+    item_price= forms.DecimalField(
+        required= True,
+        label = 'Price'
+    )
     item_description= forms.CharField(
         required=False,
-        widget=forms.Textarea,
-        label= 'Porduct Description (Optional)'
+        widget=forms.Textarea(attrs={'placeholder': 'Description of item'}),
+        label= 'Description'
+    )
+    item_negotiable= forms.BooleanField(
+        required=False,
+        label= 'Price Negotiable'
     )
     item_image= forms.ImageField(
         required=False,
-        label= 'Image (Optional)'
+        label= 'Images (Optional)'
     )

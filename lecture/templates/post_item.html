@@ -1,6 +1,7 @@
 {% extends "page.html" %}
 {% block main %}
-<form accept-charset="UTF-8" action="{% url "post_item" %}" class="form-stacked" method="post">
+<div class="row">
+<form accept-charset="UTF-8" action="{% url "post_item" %}" class="span5 offset2 form-horizontal" method="post">
 	{% csrf_token %}
 	{% if form.is_bound and not form.is_valid %}
 	<div class="alert-message block-message error">
@@ -9,9 +10,20 @@
 		</div>
 	</div>
 	{% endif %}
-	{% for field in form %}{% include "field.html" %}{% endfor %}
+	<!-- {% comment %}{% for field in form %}{% include "field.html" %}{% endfor %}{% endcomment %} -->
+	{% for field in form %}
+	<fieldset class="control-group">
+	    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+	    <div class="controls">
+	        {{ field }}
+	        <p class="help-text">{{ field.help_text }} </p>
+	    </div>
+	</fieldset>
+	{% endfor %}
+
 	<div class="actions">
-		<input class="btn btn-primary" name="commit" type="submit" value="post">
+		<input class="btn btn-primary pull-right" name="commit" type="submit" value="Post">
 	</div>
 </form>
+</div>
 {% endblock %}

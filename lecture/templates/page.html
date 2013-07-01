@@ -32,6 +32,10 @@
       {% endif %}
     </ul>
     <ul class="nav pull-right">
+      <form class="navbar-search" accept-charset="UTF-8" action="{% url "search" %}"  method="get">
+          <input id="id_q" type="text" class="search-query" name ="q" placeholder="Search">
+           <!-- <span class="add-on"> <i class="icon-search"></i> </span> -->
+      </form>
       {% if user.is_authenticated %}
         <li><a href="{% url "sign_out" %}">Sign Out</a></li>
         <li><img src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=30" style="margin-top:10px;"/></li>
