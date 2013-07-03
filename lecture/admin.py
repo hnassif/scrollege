@@ -14,3 +14,4 @@ admin.site.register(Session)
 admin.site.register(Question)
 """
 admin.site.register(Item)
+admin.site.register(Message)

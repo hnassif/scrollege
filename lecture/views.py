@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 # from djagno.template import loader
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 # from lecture.models import Session, SessionTransaction, Question
@@ -15,7 +15,7 @@ except ImportError: import json
 from django.contrib.auth.decorators import login_required
 
 from forms import RegForm, SignInForm, ItemForm, SearchForm, PasswordResetForm
-from models import Item
+from models import Item, Message
 
 
 def home(request):
@@ -173,4 +173,16 @@ def reset_password(request):
         form = PasswordResetForm()
 
 def testMessages(request):
-     return render_to_response('messages.html')
+    list_of_my_messages = Message.objects.filter(item_involved__owner=request.user)
+    list_of_my_items = Item.objects.filter(owner=User.objects.filter(id=request.user.id)[0])
+    print list_of_my_items
+    return render_to_response('messages.html', {'items': list_of_my_items, 'messages': list_of_my_messages})
+
+def getMessagesFromItem(request):
+    if request.method == 'GET':
+        id=request.GET["id"]
+        list_of_messages = Message.objects.filter(item_involved__owner=request.user,item_involved__id=id)
+        mylist = []
+        for x in list_of_messages:
+            mylist.append(x.jOb())
+        return HttpResponse(json.dumps(mylist),content_type="application/json")

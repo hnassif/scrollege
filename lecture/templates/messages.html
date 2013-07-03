@@ -1,3 +1,4 @@
+
 {% load static %}<!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,15 +16,12 @@
 <div class="pure-g-r content" id="layout">
         <div class="pure-u" id="nav">
         <a href="#nav" class="nav-menu-button">Menu</a>
-
         <div class="nav-inner">
             <div class="pure-menu pure-menu-open">
                 <ul>
-                    <li><a href="#">Item 1</a></li>
-                    <li><a href="#">Item 2</a></li>
-                    <li><a href="#">Item 3</a></li>
-                    <li><a href="#">Item 4</a></li>
-                    <li><a href="#">Item 5</a></li>
+                    {% for item in items %}
+                    <li><a id="{{item.id}}" >{{item.name}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -32,6 +30,8 @@
 
     <div class="pure-u" id="list">
         <div class="content">
+
+
             <div class="email-item email-item-selected pure-g">
                 <div class="pure-u">
                     <img class="email-avatar" alt="Tilo Mitra's avatar" src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=50" height="64" width="64">
@@ -171,32 +171,7 @@
     </div>
 </div>
 
-<script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-<script>
-    YUI().use('node-base', 'node-event-delegate', function (Y) {
-
-        var menuButton = Y.one('.nav-menu-button'),
-            nav        = Y.one('#nav');
-
-        // Setting the active class name expands the menu vertically on small screens.
-        menuButton.on('click', function (e) {
-            nav.toggleClass('active');
-        });
-
-        // Your application code goes here...
-
-    });
-</script>
-
-<script>
-YUI().use('node-base', 'node-event-delegate', function (Y) {
-    // This just makes sure that the href="#" attached to the <a> elements
-    // don't scroll you back up the page.
-    Y.one('.content').delegate('click', function (e) {
-        e.preventDefault();
-    }, 'a[href="#"]');
-});
-</script>
+<scrip
 
 
 

@@ -37,10 +37,13 @@ class Item(models.Model):
 class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=2000)
-    sender = models.CharField(max_length=200)
-    item_involved = models.CharField(max_length=200)
+    sender = models.ForeignKey(User)
+    item_involved = models.ForeignKey(Item)
     isRead = models.BooleanField(default=False)
 
     def __str__(self):
-            return 'From : ' +  str(self.sender) + ' Subject : ' + str(self.subject) + ' time : ' + str(self.timestamp)
+            return 'From : ' +  str(self.sender) + ' Subject : ' + str(self.content) + ' time : ' + str(self.timestamp)
+
+    def jOb(self):
+        return {'from':self.sender.username, 'message':self.content}
         
