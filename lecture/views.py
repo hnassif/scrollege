@@ -69,13 +69,14 @@ def sign_out(request):
 @login_required
 def post_item(request):
     if request.method == 'POST':
-        form = ItemForm(request.POST)
+        form = ItemForm(request.POST,  request.FILES)
         if form.is_valid():
             m_tags = form.cleaned_data['item_tags']
             m = Item(
                 name=form.cleaned_data['item_name'],
                 # type=form.cleaned_data['item_type'],
                 # item_image=request.FILES['item_image'],
+                image = form.cleaned_data['image'],
                 price=form.cleaned_data['item_price'],
                 negotiable=form.cleaned_data['item_negotiable'],
                 owner=request.user,

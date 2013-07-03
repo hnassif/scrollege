@@ -1,7 +1,7 @@
 {% extends "page.html" %}
 {% block main %}
 <div class="row">
-<form accept-charset="UTF-8" action="{% url "post_item" %}" class="span5 offset2 form-horizontal" method="post">
+<form accept-charset="UTF-8" action="{% url "post_item" %}" class="span5 offset2 form-horizontal" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	{% if form.is_bound and not form.is_valid %}
 	<div class="alert-message block-message error">
