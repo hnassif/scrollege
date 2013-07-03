@@ -94,9 +94,14 @@ class ItemForm(TeachForm):
         required=False,
         label= 'Price Negotiable'
     )
-    item_image= forms.ImageField(
-        required=False,
-        label= 'Images (Optional)'
+    # item_image= forms.ImageField(
+    #     required=False,
+    #     label= 'Images (Optional)'
+    # )
+    image = forms.FileField(
+        label='Upload an image (optional)',
+        help_text='max. 42 megabytes',
+        required=False
     )
 
 class PasswordResetForm(TeachForm):

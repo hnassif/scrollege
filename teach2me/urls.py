@@ -1,7 +1,9 @@
 from django.conf.urls import patterns, include, url
 from lecture import views
+import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -17,4 +19,4 @@ urlpatterns = patterns('',
                        url(r'^accounts/login/$', views.sign_in),
                        url(r'^search', views.search, name='search'),
                        url(r'^messages$',views.testMessages, name='my_messages'),
-                       )
+                       ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

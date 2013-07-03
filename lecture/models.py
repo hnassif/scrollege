@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from teach2me.settings import MEDIAFILES_DIRS
+# from teach2me.settings import MEDIAFILES_DIRS
 from taggit.managers import TaggableManager
 
 
@@ -27,6 +27,8 @@ class Item(models.Model):
     negotiable = models.BooleanField(default=False)
     owner=models.ForeignKey(User)
     description = models.CharField(max_length=2000)
+    image = models.FileField(upload_to='documents/%Y/%m/%d',
+        blank=True)
     tags = TaggableManager()
 
     def __str__(self):
@@ -43,4 +45,3 @@ class Message(models.Model):
 
     def __str__(self):
             return 'From : ' +  str(self.sender) + ' Subject : ' + str(self.subject) + ' time : ' + str(self.timestamp)
-        
