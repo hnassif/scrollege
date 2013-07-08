@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 # from djagno.template import loader
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 # from lecture.models import Session, SessionTransaction, Question
@@ -22,12 +22,12 @@ def home(request):
     q = Item.objects.all().reverse()[:20]
     return render_to_response('homepage_default.html', {'items': q, 'user': request.user})
 
-@login_required
-def my_items(request):
-    list_of_my_items = Item.objects.filter(owner=User.objects.filter(id=request.user.id)[0])
-    print list_of_my_items
-    print "request.user is" + str(request.user.id)
-    return render_to_response('my_items.html', {'items': list_of_my_items, 'user': request.user})
+# @login_required
+# def my_items(request):
+#     list_of_my_items = Item.objects.filter(owner=User.objects.filter(id=request.user.id)[0])
+#     print list_of_my_items
+#     print "request.user is" + str(request.user.id)
+#     return render_to_response('my_items.html', {'items': list_of_my_items, 'user': request.user})
 
 def sign_in(request):
     if request.user.is_authenticated():
@@ -86,7 +86,8 @@ def post_item(request):
             print "item has been saved with item_id "+str(m.pk)
             print m_tags
             m.tags.add(*m_tags)
-            return my_items(request)
+            # return my_items(request)
+            return HttpResponseRedirect('/')
 
     else:
         form = ItemForm()
@@ -173,17 +174,42 @@ def reset_password(request):
     else:
         form = PasswordResetForm()
 
-def testMessages(request):
-    list_of_my_messages = Message.objects.filter(item_involved__owner=request.user)
-    list_of_my_items = Item.objects.filter(owner=User.objects.filter(id=request.user.id)[0])
-    print list_of_my_items
-    return render_to_response('messages.html', {'items': list_of_my_items, 'messages': list_of_my_messages})
+@login_required
+def messages(request):
+    if request.user.is_authenticated():
+        list_of_my_messages = Message.objects.filter(item__owner=request.user)
+        list_of_my_items = Item.objects.filter(owner=User.objects.filter(id=request.user.id)[0])
+        print list_of_my_items
+        return render_to_response('messages.html', {'items': list_of_my_items, 'messages': list_of_my_messages})
+    else:
+        raise Http404
 
-def getMessagesFromItem(request):
+
+# Messages JSON API
+@login_required
+def item_messages(request):
+    # try:
+        if request.method == 'GET':
+            id=request.GET["id"]
+            list_of_messages = Message.objects.filter(item__owner=request.user,item__id=id)
+            mylist = []
+            for x in list_of_messages:
+                mylist.append(x.jOb())
+            return HttpResponse(json.dumps(mylist),content_type="application/json")
+
+
+def msg_from_id(request):
+    if request.method == "GET":
+        msg = Message.objects.filter(pk=request.GET["id"])[0].jOb()
+    else:
+        msg = None
+    return HttpResponse(json.dumps(msg),content_type="application/json")
+
+def senders_from_id(request):
     if request.method == 'GET':
-        id=request.GET["id"]
-        list_of_messages = Message.objects.filter(item_involved__owner=request.user,item_involved__id=id)
-        mylist = []
-        for x in list_of_messages:
-            mylist.append(x.jOb())
-        return HttpResponse(json.dumps(mylist),content_type="application/json")
+            id=request.GET["id"]
+            list_of_messages = Message.objects.filter(item__owner=request.user,item__id=id)
+            mylist = []
+            for x in list_of_messages:
+                mylist.append(x.jOb())
+            return HttpResponse(json.dumps(mylist),content_type="application/json")

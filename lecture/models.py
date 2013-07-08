@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 # from teach2me.settings import MEDIAFILES_DIRS
 from taggit.managers import TaggableManager
+import hashlib
+
 
 
 # Create your models here.
@@ -32,7 +34,7 @@ class Item(models.Model):
     tags = TaggableManager()
 
     def __str__(self):
-            return str(self.name) + ', ' + str(self.description) + \
+            return str(self.pk)+' '+str(self.name) + ', ' + str(self.description) + \
             str(self.tags.all())
 
 
@@ -40,13 +42,22 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=2000)
     sender = models.ForeignKey(User)
-    item_involved = models.ForeignKey(Item)
+    item = models.ForeignKey(Item)
     isRead = models.BooleanField(default=False)
 
     def __str__(self):
             return 'From : ' +  str(self.sender) + ' Subject : ' + str(self.content) + ' time : ' + str(self.timestamp)
 
     def jOb(self):
-        return {'from':self.sender.username, 'message':self.content}
+        return {
+            'timestamp':str(self.timestamp),
+            'from':self.sender.first_name+' '+self.sender.last_name,
+            'message':self.content,
+            'read':self.isRead,
+            'email':hashlib.md5(self.sender.email).hexdigest(),
+            'subject':self.item.name,
+            'price': self.item.price,
+            'description':self.item.description
+        }
         
 
