@@ -9,6 +9,11 @@ from django.contrib.auth import authenticate, login, logout
 # from lecture.models import Session, SessionTransaction, Question
 # import simplejson
 
+from django.db.models import Count
+import hashlib
+from django.db.models import Q
+from django.utils.timesince import timesince
+
 try: import simplejson as json
 except ImportError: import json
 
@@ -191,12 +196,28 @@ def item_messages(request):
     # try:
         if request.method == 'GET':
             id=request.GET["id"]
-            list_of_messages = Message.objects.filter(item__owner=request.user,item__id=id)
-            mylist = []
+            list_of_messages = Message.objects.filter(
+                item__owner=request.user,item__id=id).values(
+                'sender','sender__first_name','sender__last_name','sender__email','item','item__name','item__price').order_by().annotate(Count('sender'))
             for x in list_of_messages:
-                mylist.append(x.jOb())
-            return HttpResponse(json.dumps(mylist),content_type="application/json")
+                x['sender__email'] = hashlib.md5(x['sender__email']).hexdigest()
+            # return HttpResponse(str(list(list_of_messages)));
+            return HttpResponse(json.dumps(list(list_of_messages)),content_type="application/json")
 
+@login_required
+def message_thread(request):
+    if request.method == 'GET':
+        item_id = request.GET['item_id']
+        sender_id = request.GET['sender_id']
+        thread_msgs = Message.objects.filter(item_id=item_id).filter(
+            Q(sender__id=sender_id)|Q(sender__id=request.user.id)).values(
+            'timestamp','sender__first_name','sender__last_name','sender__email','content').order_by('-timestamp')
+        
+        for x in thread_msgs:
+            x['sender__email'] = hashlib.md5(x['sender__email']).hexdigest()
+            x['timestamp'] = timesince(x['timestamp'])
+        response = {'request':{'user_id':request.user.id},'data':list(thread_msgs)}
+        return HttpResponse(json.dumps(response), content_type="application/json")
 
 def msg_from_id(request):
     if request.method == "GET":
@@ -208,8 +229,4 @@ def msg_from_id(request):
 def senders_from_id(request):
     if request.method == 'GET':
             id=request.GET["id"]
-            list_of_messages = Message.objects.filter(item__owner=request.user,item__id=id)
-            mylist = []
-            for x in list_of_messages:
-                mylist.append(x.jOb())
-            return HttpResponse(json.dumps(mylist),content_type="application/json")
+            pass

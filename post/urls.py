@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from lecture import views
+from website import views
 import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -26,4 +26,5 @@ urlpatterns = patterns('',
                        # url(r'^api/items$',views.msg_all_items_json),
                        url(r'^api/message$',views.msg_from_id),
                        url(r'^api/senders$',views.senders_from_id),
+                       url(r'^api/thread$',views.message_thread),
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

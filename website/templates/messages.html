@@ -1,0 +1,58 @@
+
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Messages</title>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
+        <link href="{% get_static_prefix %}css/email.css" media="screen" rel="stylesheet" type="text/css">
+        <script src="{% get_static_prefix %}js/yui-min.js"></script>
+    </head>
+    <body>
+
+
+
+
+<div class="pure-g-r content" id="layout">
+        <div class="pure-u" id="nav">
+        <a href="#nav" class="nav-menu-button">Menu</a>
+        <div class="nav-inner">
+            <div class="pure-menu pure-menu-open">
+                <ul id="post-items">
+                    {% for item in items %}
+                    <li><a id="{{item.pk}}" name="{{item.pk}}">{{item.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="pure-u" id="list">
+      
+        <div class="content">
+            <ul>
+                <li class="email-item no-msg">
+                    <p>
+                        To begin, select an item on the left
+                    </p>
+                </li>
+            </ul>
+                       
+        </div><!-- end of content -->
+    </div> <!-- end of list -->
+
+    <div class="pure-u" id="main">
+        <div >
+            <ul>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% get_static_prefix %}js/messages.js"></script>
+
+
+</body>
+</html>
