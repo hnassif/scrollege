@@ -13,6 +13,7 @@ from django.db.models import Count
 import hashlib
 from django.db.models import Q
 from django.utils.timesince import timesince
+from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
 except ImportError: import json
@@ -197,7 +198,7 @@ def item_messages(request):
         if request.method == 'GET':
             id=request.GET["id"]
             list_of_messages = Message.objects.filter(
-                item__owner=request.user,item__id=id).values(
+                item__owner=request.user,item__id=id).filter(~Q(sender=request.user)).values(
                 'sender','sender__first_name','sender__last_name','sender__email','item','item__name','item__price').order_by().annotate(Count('sender'))
             for x in list_of_messages:
                 x['sender__email'] = hashlib.md5(x['sender__email']).hexdigest()
@@ -210,7 +211,7 @@ def message_thread(request):
         item_id = request.GET['item_id']
         sender_id = request.GET['sender_id']
         thread_msgs = Message.objects.filter(item_id=item_id).filter(
-            Q(sender__id=sender_id)|Q(sender__id=request.user.id)).values(
+            (Q(sender__id=sender_id)&Q(receiver=request.user))|(Q(sender__id=request.user.id)&(Q(receiver__id=sender_id)))).values(
             'timestamp','sender__first_name','sender__last_name','sender__email','content').order_by('-timestamp')
         
         for x in thread_msgs:
@@ -219,14 +220,26 @@ def message_thread(request):
         response = {'request':{'user_id':request.user.id},'data':list(thread_msgs)}
         return HttpResponse(json.dumps(response), content_type="application/json")
 
-def msg_from_id(request):
-    if request.method == "GET":
-        msg = Message.objects.filter(pk=request.GET["id"])[0].jOb()
-    else:
-        msg = None
-    return HttpResponse(json.dumps(msg),content_type="application/json")
+# def msg_from_id(request):
+#     if request.method == "GET":
+#         msg = Message.objects.filter(pk=request.GET["id"])[0].jOb()
+#     else:
+#         msg = None
+#     return HttpResponse(json.dumps(msg),content_type="application/json")
 
-def senders_from_id(request):
-    if request.method == 'GET':
-            id=request.GET["id"]
-            pass
+
+# @login_required
+@csrf_exempt
+def send_message(request):
+    if request.method == "POST":
+        if all(key in request.POST for key in ('message','sender_id','item_id')):
+            Message(
+                content = request.POST['message'].strip(),
+                sender = request.user,
+                item  = Item.objects.filter(id=int(request.POST['item_id']))[0],
+                # todo: check if user has contacted user initially
+                receiver = User.objects.filter(id=int(request.POST['sender_id']))[0],
+                isRead = False
+                ).save()
+        
+    return HttpResponse(json.dumps(1),content_type="application/json")

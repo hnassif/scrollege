@@ -41,7 +41,8 @@ class Item(models.Model):
 class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=2000)
-    sender = models.ForeignKey(User)
+    sender = models.ForeignKey(User,related_name="msg_sender")
+    receiver = models.ForeignKey(User, related_name="msg_receiver")
     item = models.ForeignKey(Item)
     isRead = models.BooleanField(default=False)
 

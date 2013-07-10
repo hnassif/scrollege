@@ -24,7 +24,8 @@ urlpatterns = patterns('',
                        # JSON api
                        url(r'^api/item$',views.item_messages),
                        # url(r'^api/items$',views.msg_all_items_json),
-                       url(r'^api/message$',views.msg_from_id),
-                       url(r'^api/senders$',views.senders_from_id),
+                       # url(r'^api/message$',views.msg_from_id),
+                       # url(r'^api/senders$',views.senders_from_id),
                        url(r'^api/thread$',views.message_thread),
+                       url(r'^api/send$', views.send_message),
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

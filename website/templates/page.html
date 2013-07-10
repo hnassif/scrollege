@@ -1,5 +1,6 @@
-{% load gravatar %}
-{% load static %}<!DOCTYPE html>
+
+{% load static %}{% load gravatar %}<!DOCTYPE html>
+
 {% comment %} This is the main template{% endcomment %}
 <html>
   <head>
@@ -40,7 +41,12 @@
       </form>
       {% if user.is_authenticated %}
         <li><a href="{% url "sign_out" %}">Sign Out</a></li>
-        <li><img src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=30" style="margin-top:10px;"/></li>
+        <li>
+          <!-- <img src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=30" style="margin-top:10px;"/> -->
+          <!-- <img src="{% gravatar_url "{{user.email}}" %}"> -->
+          <script> console.log("{{user.email}}");</script>
+          <img src="{% gravatar_url "user.email" }">
+        </li>
         {% else %}
         <li><a href="{% url "register" %}">Sign In</a></li>
 
