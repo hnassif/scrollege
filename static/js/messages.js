@@ -1,4 +1,6 @@
 var xl;
+var current_sender_id = null;
+var current_item_id = null;
 YUI().use('node', 'event', 'io','json', function (Y) {
     var reply_form = function(){
         //reply form
@@ -6,11 +8,28 @@ YUI().use('node', 'event', 'io','json', function (Y) {
         console.log('replyForm');
         console.log(replyForm);
         replyForm.on('submit', function(evt){
-                // evt.preventDefault();
+                evt.preventDefault();
                 console.log('reply form submitted');
                 var msg = Y.one('#reply-form textarea').get('value');
+                
+                console.log('msg = '+msg);
+                var cfg = {
+                    method: 'POST',
+                    data: {
+                        'message':msg,
+                        'sender_id':current_sender_id,
+                        'item_id':current_item_id},
+                    on: {
+                        start: function(){console.log('started sending');},
+                        complete: function(){console.log('com[letw');},
+                        // end: Dispatch.end
+                    }
+                };
                 // post msg
                 // update UI with new msg
+                Y.io('/api/send', cfg);
+                console.log('sent');
+
                 });
     };
     function makehtml(msg){
@@ -85,6 +104,7 @@ var onItemClick = function(e){
         '/api/item?id='+clcked_item_id, {
             on: {
                 success: function (tx, r) {
+                    current_item_id = clcked_item_id;
                     var parsedResponse = null;
                 // protected against malformed JSON response
                 try {
@@ -119,6 +139,7 @@ var onItemClick = function(e){
                         Y.io('/api/thread?item_id='+item_id+'&sender_id='+sender_id,{
                             on:{
                                 success:function(code, value){
+                                    current_sender_id = sender_id;
                                     Y.all('#main ul li').remove();
                                     var data = Y.JSON.parse(value.responseText).data;
                                     for (var x in data){

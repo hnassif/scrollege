@@ -13,6 +13,7 @@ from django.db.models import Count
 import hashlib
 from django.db.models import Q
 from django.utils.timesince import timesince
+from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
 except ImportError: import json
@@ -230,3 +231,17 @@ def senders_from_id(request):
     if request.method == 'GET':
             id=request.GET["id"]
             pass
+
+# @login_required
+@csrf_exempt
+def send_message(request):
+    if request.method == "POST":
+        if all(key in request.POST for key in ('message','sender_id','item_id')):
+            Message(
+                content = request.POST['message'].strip(),
+                sender = request.user,
+                item  = Item.objects.filter(id=int(request.POST['item_id']))[0],
+                isRead = False
+                ).save()
+        
+    return HttpResponse(json.dumps(1),content_type="application/json")
