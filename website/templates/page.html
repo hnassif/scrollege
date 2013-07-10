@@ -44,8 +44,7 @@
         <li>
           <!-- <img src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=30" style="margin-top:10px;"/> -->
           <!-- <img src="{% gravatar_url "{{user.email}}" %}"> -->
-          <script> console.log("{{user.email}}");</script>
-          <img src="{% gravatar_url "user.email" }">
+          <img src="{% gravatar_url user.email %}" height="42" width="42"  style="margin:auto;">
         </li>
         {% else %}
         <li><a href="{% url "register" %}">Sign In</a></li>

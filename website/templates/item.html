@@ -1,3 +1,4 @@
+{% load gravatar %}
 {% if user.is_authenticated %}
 {% comment %}Item with image{% endcomment %}
    <!-- single box-->
@@ -24,7 +25,7 @@
                 {{item.description|truncatechars:103}}
                 <div>
                     <!--<strong>{{item.owner.email}}</strong>-->
-                    <img alt="gravatar" src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=20"/>
+                    <img alt="gravatar" src="{% gravatar_url item.owner.email %}" height="22" width="22"  style="margin:auto;">
                 </div>
                 
             </div>
