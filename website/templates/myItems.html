@@ -1,0 +1,24 @@
+{% extends "page.html" %}
+{% load gravatar %}
+{% block main %}
+
+
+
+
+        <div id="myItems">
+                        {% for item in items %}
+                                 {% if forloop.counter0|divisibleby:"3"%}
+                                        <div class="row-fluid topspace"> <!-- begin single line -->
+                                        {% endif %}
+                                        {% include "item.html" %}
+                                        {% if forloop.counter|divisibleby:"3" or forloop.last%}
+                                        </div>
+                                {% endif %}
+                                {% empty %}
+                                 <h3 class="text-center">Sorry, no items in the database. Be the first to post!</h3>
+                                {% endfor %}
+			<!-- single line -->
+
+        </div>
+
+        {% endblock %}

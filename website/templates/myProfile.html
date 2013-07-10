@@ -1,0 +1,67 @@
+{% extends "page.html" %}
+{% load gravatar %}
+{% block main %}
+
+
+			<div class="clearfix">
+				<img src="{% gravatar_url user.email %}" class="img-polaroid clearfix" style="height:100px">
+			</div>
+			<table class="table table-bordered span4 ">
+				<caption>INFORMATION</caption>
+				<tbody>
+					<tr>
+						<td>Name</td>
+                                                <td>{{user.first_name}} {{user.last_name}}</td>
+					</tr>
+					<tr>
+						<td>username</td>
+						<td>{{user.username}} </td>
+					</tr>
+					<tr>
+						<td>MIT email</td>
+						<td>{{user.email}}</td>
+					</tr>
+             
+                                        <tr>
+                                                <td>nothinggg</td>
+                                                <td><a href="#myModal" role="button" class="btn" data-toggle="modal">Reset Password</a> </td>
+                                        </tr>
+				</tbody>
+			</table>
+                       
+    <!-- Button to trigger modal -->
+                           
+                             
+                            <!-- Modal -->
+                            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h3 id="myModalLabel">Password Reset</h3>
+                                </div>
+                            <div class="modal-body">
+                               
+                                <form accept-charset="UTF-8" action="{% url "post_item" %}" class="form-stacked" method="post">
+                                        {% csrf_token %}
+                                        {% if form.is_bound and not form.is_valid %}
+                                        <div class="alert-message block-message error">
+                                                <div class="errors">
+                                                        {% include "errors.html" %}
+                                                </div>
+                                        </div>
+                                        {% endif %}
+                                        {% for field in form %}{% include "field.html" %}{% endfor %}
+                                        <div class="modal-footer">
+                                                        <input class="btn btn-primary" name="commit" type="submit" value="Save new Password">
+                                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                        </div>
+                                        
+                                </form>
+                                
+
+                            </div>
+
+                            </div>
+         
+		
+		
+		{% endblock %}
