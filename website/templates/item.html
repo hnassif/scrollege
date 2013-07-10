@@ -92,6 +92,7 @@
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
         {% if user.is_authenticated%}
             <button class="btn btn-primary">Contact Seller</button> 
+            <input type="hidden" name="{{item.id}}"/>
         {% else %}
             <div style="position:relative; bottom:0;width:100%;left:0;height:30px;background-color:#434; margin:5px 10px 3px 2px;padding:3px 3px 3px 10px;">
                 <h4 class="pull-left" style="color:#ddd;">Login to contact seller</h4>

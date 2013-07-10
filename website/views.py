@@ -243,3 +243,19 @@ def send_message(request):
                 ).save()
         
     return HttpResponse(json.dumps(1),content_type="application/json")
+
+@csrf_exempt
+def start_thead(request):
+    if request.method == "POST":
+        sender = request.user
+        if all(key in request.POST for key in ('message','item_id')):
+            # print "all is well"
+            temp_item = Item.objects.filter(id=int(request.POST['item_id']))[0]
+            if temp_item:
+                Message(
+                    content = request.POST['message'].strip(),
+                    sender = request.user,
+                    receiver = temp_item.owner,
+                    item = temp_item,
+                    ).save();
+    return HttpResponse(json.dumps({'response':'OK'}),content_type="application/json")

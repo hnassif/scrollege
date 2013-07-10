@@ -28,4 +28,5 @@ urlpatterns = patterns('',
                        # url(r'^api/senders$',views.senders_from_id),
                        url(r'^api/thread$',views.message_thread),
                        url(r'^api/send$', views.send_message),
+                       url(r'^api/handshake',views.start_thead)
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
