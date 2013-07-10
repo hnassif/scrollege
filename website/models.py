@@ -57,7 +57,9 @@ class Message(models.Model):
             'email':hashlib.md5(self.sender.email).hexdigest(),
             'subject':self.item.name,
             'price': self.item.price,
-            'description':self.item.description
+            'description':self.item.description,
+            'item_id':self.item.pk,
+            'sender_id':self.sender.pk
         }
         
 

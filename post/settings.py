@@ -1,4 +1,4 @@
-# Django settings for teach2me project.
+# Django settings for post project.
 import os
 
 DEBUG = True
@@ -99,10 +99,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'teach2me.urls'
+ROOT_URLCONF = 'post.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'teach2me.wsgi.application'
+WSGI_APPLICATION = 'post.wsgi.application'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -115,12 +115,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'lecture',
+    'website',
     'taggit',
     # 'haystack',
 )
 
-TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, '../lecture/templates'),)
+TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, '../website/templates'),)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
