@@ -173,9 +173,10 @@ def reset_password(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
-            new_Password=form.cleaned_data['newPassword']
-            confirm_New_Password=form.cleaned_data['confirmNewPassword']
-            if new_Password == confirm_New_Password:
+            old_Password=form.cleaned_data['old_Password']
+            new_Password=form.cleaned_data['new_Password']
+            confirm_New_Password=form.cleaned_data['confirm_New_Password']
+            if new_Password == confirm_New_Password and user.check_password(old_password):
                 request.user.set_password(newPassword)
     else:
         form = PasswordResetForm()
