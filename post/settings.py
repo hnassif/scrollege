@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'website',
     'taggit',
+    'lib'
     # 'haystack',
 )
 

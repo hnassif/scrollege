@@ -2,6 +2,35 @@ var xl;
 var current_sender_id = null;
 var current_item_id = null;
 YUI().use('node', 'event', 'io','json', function (Y) {
+    var sender_refresh = function(item_id,sender_id){
+        Y.io('/api/thread?item_id='+item_id+'&sender_id='+sender_id,{
+                            on:{
+                                success:function(code, value){
+                                    current_sender_id = sender_id;
+                                    Y.all('#main ul li').remove();
+                                    var data = Y.JSON.parse(value.responseText).data;
+                                    for (var x in data){
+                                        //Y.one.('#main ul').append(threadhtml(data[x]);
+                                            Y.one('#main ul').append(threadhtml(data[x]));
+                                        }
+                                        Y.one('#main ul').append(replyBox());
+                                        reply_form();
+                                    }
+                                }
+                            });
+    };
+    var onSenderClick = function(e){
+                        var item = e.currentTarget;
+                        Y.all('#list .content ul li').removeClass('email-item-selected');
+                        if(item.hasClass('no-msg')){
+                            return;
+                        }
+                        item.addClass('email-item-selected');
+                        item_id = item.one('input[name="item_id"]').get('value');
+                        sender_id = item.one('input[name="sender_id"]').get('value');
+                        // console.log(item_id,sender_id);
+                        sender_refresh(item_id,sender_id);
+                    };
     var reply_form = function(){
         //reply form
         replyForm = Y.one('#reply-form');
@@ -10,8 +39,17 @@ YUI().use('node', 'event', 'io','json', function (Y) {
         replyForm.on('submit', function(evt){
                 evt.preventDefault();
                 console.log('reply form submitted');
-                var msg = Y.one('#reply-form textarea').get('value');
-                
+                var text_area=Y.one('#reply-form textarea');
+                var msg = text_area.get('value');
+
+                var start_reply = function(){
+                    text_area.set('disabled',true);
+                };
+                var complete_reply = function(){
+                    // console.log(Y.one('#list .content ul li.email-item-selected'));
+                    sender_refresh(current_item_id,current_sender_id);
+                };
+
                 console.log('msg = '+msg);
                 var cfg = {
                     method: 'POST',
@@ -20,9 +58,12 @@ YUI().use('node', 'event', 'io','json', function (Y) {
                         'sender_id':current_sender_id,
                         'item_id':current_item_id},
                     on: {
-                        start: function(){console.log('started sending');},
-                        complete: function(){console.log('com[letw');},
-                        // end: Dispatch.end
+                        start: start_reply(),
+                        // complete: complete_reply(),
+                        end: function(){
+                            Y.all('#list .content ul li').removeClass('email-item-selected');
+                            sender_refresh(current_item_id,current_sender_id);
+                        }
                     }
                 };
                 // post msg
@@ -126,33 +167,7 @@ var onItemClick = function(e){
                         // console.log(parsedResponse[i]);
                         Y.one('#list .content ul').append(makehtml(parsedResponse[i]));
                     }
-                    var onSenderClick = function(e){
-                        var item = e.currentTarget;
-                        Y.all('#list .content ul li').removeClass('email-item-selected');
-                        if(item.hasClass('no-msg')){
-                            return;
-                        }
-                        item.addClass('email-item-selected');
-                        item_id = item.one('input[name="item_id"]').get('value');
-                        sender_id = item.one('input[name="sender_id"]').get('value');
-                        // console.log(item_id,sender_id);
-                        Y.io('/api/thread?item_id='+item_id+'&sender_id='+sender_id,{
-                            on:{
-                                success:function(code, value){
-                                    current_sender_id = sender_id;
-                                    Y.all('#main ul li').remove();
-                                    var data = Y.JSON.parse(value.responseText).data;
-                                    for (var x in data){
-                                        //Y.one.('#main ul').append(threadhtml(data[x]);
-                                            Y.one('#main ul').append(threadhtml(data[x]));
-                                        }
-                                        Y.one('#main ul').append(replyBox());
-                                        reply_form();
-                                    }
-                                }
-                            }
-                            );
-                    };
+                    
                     Y.one('#list .content ul').delegate('click', onSenderClick, 'li');
                 }
             }
