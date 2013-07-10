@@ -17,10 +17,12 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^test$', views.testDavid, name='test'),
                        # temporarily redirect the page //
-                       url(r'^my_items$',views.testHenry, name='my_items'),
+                       #url(r'^my_items$',views.testHenry, name='my_items'),
                        url(r'^accounts/login/$', views.sign_in),
                        url(r'^search', views.search, name='search'),
                        url(r'^messages$',views.messages, name='messages'),
+                       url(r'^profile$',views.goToProfile, name='profile'),
+                       url(r'^myItems$',views.goToMyItems, name='myItems'),
                        # JSON api
                        url(r'^api/item$',views.item_messages),
                        # url(r'^api/items$',views.msg_all_items_json),

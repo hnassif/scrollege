@@ -243,3 +243,15 @@ def send_message(request):
                 ).save()
         
     return HttpResponse(json.dumps(1),content_type="application/json")
+
+
+
+def goToProfile(request):
+ form = PasswordResetForm()
+ return render_to_response('myProfile.html' , {'user': request.user, 'form': form})
+
+def goToMyItems(request):
+     list_of_my_items = Item.objects.filter(owner=request.user)
+     print list_of_my_items
+     print "request.user is" + str(request.user.id)
+     return render_to_response('myItems.html', {'items': list_of_my_items})
