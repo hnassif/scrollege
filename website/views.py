@@ -169,6 +169,7 @@ def search(request):
     else:
         return HttpResponseRedirect('/')
 
+@csrf_exempt
 def reset_password(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
@@ -177,7 +178,7 @@ def reset_password(request):
             new_Password=form.cleaned_data['new_Password']
             confirm_New_Password=form.cleaned_data['confirm_New_Password']
             if new_Password == confirm_New_Password and user.check_password(old_password):
-                request.user.set_password(newPassword)
+                request.user.set_password(new_Password)
     else:
         form = PasswordResetForm()
 

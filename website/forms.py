@@ -108,6 +108,7 @@ class PasswordResetForm(TeachForm):
 
     old_Password= forms.CharField(
         required= True
+        
     )
 
     new_Password= forms.CharField(
