@@ -1,4 +1,5 @@
 {% extends "page.html" %}
+{% load gravatar %}
 {% block main %}
 
 
@@ -27,27 +28,24 @@
         </div>
 		<div class="tab-pane" id="myProfile">
 			<div class="clearfix">
-				<img src="http://placehold.it/100x100" class="img-polaroid clearfix" style="height:100px">
+				<img src="{% gravatar_url user.email %}" class="img-polaroid clearfix" style="height:100px">
 			</div>
 			<table class="table table-bordered span4 ">
 				<caption>INFORMATION</caption>
 				<tbody>
 					<tr>
 						<td>Name</td>
-                                                <td>Henry Nassif</td>
+                                                <td>{{user.first_name}} {{user.last_name}}</td>
 					</tr>
 					<tr>
 						<td>username</td>
-						<td>hnassif</td>
+						<td>{{user.username}} </td>
 					</tr>
 					<tr>
 						<td>MIT email</td>
-						<td>hnassif@mit.edu</td>
+						<td>{{user.email}}</td>
 					</tr>
-                                        <tr>
-						<td>Cellphone</td>
-						<td>12345543 <button class="btn btn-danger"  style="margin-left: 80px;" type="reset">Change</button> </td>
-                                        </tr>
+             
                                         <tr>
                                                 <td>nothinggg</td>
                                                 <td><a href="#myModal" role="button" class="btn" data-toggle="modal">Reset Password</a> </td>
