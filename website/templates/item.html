@@ -1,40 +1,7 @@
-{% load gravatar %}
-{% if item.image %}
-{% comment %}Item with image{% endcomment %}
-   <!-- single box-->
-    <div class="span4">
-        <div class="row-fluid">
-            <div class="span4" id="{{item.id}}">
-                <a href="#myModal{{item.id}}" role="button" data-toggle="modal">
-                    <!-- <img alt="item image" src="http://placehold.it/100x100" class="hoverImages"/> -->
-                    {% if item.image %}
-                    <img alt="image" src="{{ item.image.url }}" class="hoverImages" width=100px height=100px/>
-                    {% else %}
-                    <img alt="item image" src="http://placehold.it/100x100" class="hoverImages"/>
-                    {% endif %}
-                </a>
-            </div>
-            <div class="span6 text-fix">
-                <strong>Name: </strong>{{item.name}}
-                <br/>
-                {% for tag in item.tags.all %}
-                {% if forloop.first%}<strong>Type: </strong>{% endif%}
-                {% if forloop.last %} {{ tag.name }} {% else %} {{ tag.name }}, {% endif %}
-                {% endfor %}
-                <br/><!--max of 100-106 char -->
-                {{item.description|truncatechars:103}}
-                <div>
-                    <!--<strong>{{item.owner.email}}</strong>-->
-                    <img alt="gravatar" src="{% gravatar_url item.owner.email %}" height="22" width="22"  style="margin:auto;">
-                </div>
-                
-            </div>
-        </div>
-    </div><!--end single box -->
-{% else %}
-{% comment %}Item without image{% endcomment %}
-        <!-- single box-->
-    <div class="span4 well" id="{{item.id}}">
+
+<!-- single box-->
+<div class="span4 well" id="{{item.id}}" style="height:140px;">
+    <a href="#myModal{{item.id}}" class="no-links" role="button" data-toggle="modal">
         <div class="row-fluid">
             <div class="span8 text-fix">
                 <strong>Name: </strong>{{item.name}}
@@ -51,11 +18,15 @@
                 </div>
             </div>
             <div class="span4">
-                <a href="#myModal{{item.id}}" role="button" data-toggle="modal"><img alt="qrcode" src="http://en.gravatar.com/davidogutu.qr?s=100" class="hoverImages"/></a>
+                {%if item.image %}
+                <img alt="image" src="{{ item.image.url }}" class="hoverImages" width=100px height=100px/>
+                {% else %}
+                <img alt="image" src="http://placehold.it/100" class="hoverImages" width=100px height=100px/>
+                {% endif %}
             </div>
-        </div>
-    </div><!--end single box -->
-{% endif %}
+    </div>
+</a>
+</div><!--end single box -->
 
 
 <div id="myModal{{item.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -67,9 +38,9 @@
         <div class="row">
             <div class="span2">
                 {% if item.image %}
-                    <img src="{{item.image.url}}" width="100px" height="100px"/>
+                <img src="{{item.image.url}}" width="100px" height="100px"/>
                 {% else %}
-                    <img src="http://placehold.it/100"/>
+                <img src="http://placehold.it/100"/>
                 {% endif %}
             </div>
             <div class="span6 offset1">
@@ -79,9 +50,9 @@
                 {% if forloop.first %}<h4><strong>Type</strong>:{% endif%}
                 {% if forloop.last %} {{ tag.name }} </h4> {% else %} {{ tag.name }}, {% endif %}
                 {% endfor %}
-                </h4>
-            </div>
+            </h4>
         </div>
+
         {% if user.is_authenticated%}
             {% if user != item.owner%}
         <div>
@@ -104,5 +75,8 @@
                 <h4 class="pull-left" style="color:#ddd;">Login to contact seller</h4>
             </div>
         {% endif %}
+
     </div>
+    {% endif %}
+</div>
 </div>'
