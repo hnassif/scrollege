@@ -83,15 +83,21 @@
             </div>
         </div>
         {% if user.is_authenticated%}
+            {% if user != item.owner%}
         <div>
             <textarea class="msg-contact-seller"></textarea>
         </div>
+            {% endif %}
         {% endif %}
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        {% if user.is_authenticated%}
-            <button class="btn btn-primary">Contact Seller</button> 
+        {% if user.is_authenticated %}
+            {% if user = item.owner%}
+                <button class="btn btn-primary">Delete Item</button> 
+            {% else %}
+                <button class="btn btn-primary">Contact Seller</button> 
+            {% endif %}
             <input type="hidden" name="{{item.id}}"/>
         {% else %}
             <div style="position:relative; bottom:0;width:100%;left:0;height:30px;background-color:#434; margin:5px 10px 3px 2px;padding:3px 3px 3px 10px;">
