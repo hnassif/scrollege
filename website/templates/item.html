@@ -1,4 +1,3 @@
-
 <!-- single box-->
 <div class="span4 well" id="{{item.id}}" style="height:200px;">
     <a href="#myModal{{item.id}}" class="no-links" role="button" data-toggle="modal">
@@ -39,54 +38,83 @@
 </div><!--end single box -->
 
 
-<div id="myModal{{item.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">{{item.name}}</h3>
-    </div>
-    <div class="modal-body item-page">
-        <div class="row">
-            <div class="span2">
-                {% if item.image_first %}
-                <img src="{{item.image_first.url}}" width="100px" height="100px"/>
-                {% else %}
-                <img src="http://placehold.it/100"/>
-                {% endif %}
-            </div>
-            <div class="span6 offset1">
-                <h4><strong>Description</strong> : {{item.description}}</h4>
-                <h4><strong>Price </strong> : {{item.price}}  {% if item.negotiable %} Negotiable {% else %} Final {% endif %}</h4>
-                {% for tag in item.tags.all %}
-                {% if forloop.first %}<h4><strong>Type</strong>:{% endif%}
-                {% if forloop.last %} {{ tag.name }} </h4> {% else %} {{ tag.name }}, {% endif %}
-                {% endfor %}
-            </h4>
+{% block mini%}
+    <div class="span12 well" id="{{item.id}}" style="height:140px;">
+        <a href="#myModal{{item.id}}" class="no-links" role="button" data-toggle="modal">
+            <div class="row-fluid">
+                <div class="span8 text-fix">
+                    <h3><strong>{{item.name}}</strong></h3>
+                    {% for tag in item.tags.all %}
+                    {% if forloop.first%}<strong>Type: </strong>{% endif%}
+                    {% if forloop.last %} {{ tag.name }} {% else %} {{ tag.name }}, {% endif %}
+                    {% endfor %}
+                    <br/><!--max of 100-106 char -->
+                    {{item.description|truncatechars:103}}
+                    <div>
+                       {% comment %} <!--<strong>{{item.owner.email}}</strong>-->
+                        <!-- <img alt="gravatar" src="http://www.gravatar.com/avatar/39f730199cd827fc603ad17003fb3967?s=20"/> -->
+                       {% endcomment %}
+                    </div>
+                </div>
+                <div class="span4">
+                    {%if item.image %}
+                    <img alt="image" src="{{ item.image.url }}" class="hoverImages" width=100px height=100px/>
+                    {% else %}
+                    <img alt="image" src="http://placehold.it/100" class="hoverImages" width=100px height=100px/>
+                    {% endif %}
+                </div>
         </div>
+    </a>
+    </div><!--end single box -->
+{% endblock %}
 
-        {% if user.is_authenticated%}
-            {% if user != item.owner%}
+{% block modal %}
+    {%block modal_div %}<div id="myModal{{item.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">{% endblock %}
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">{{item.name}}</h3>
+            <h6 class="permalink"><a href="/item/{{item.id}}">Permalink</a></h6>
+        </div>
+        <div class="modal-body item-page">
+            <div class="row">
+                <div class="span2">
+                    {% if item.image %}
+                    <img src="{{item.image.url}}" width="100px" height="100px"/>
+                    {% else %}
+                    <img src="http://placehold.it/100"/>
+                    {% endif %}
+                </div>
+                {% block text %}
+                <div class="span6 offset1">
+                    <h4><strong>Description</strong> : {{item.description}}</h4>
+                    <h4><strong>Price </strong> : {{item.price}}  {% if item.negotiable %} Negotiable {% else %} Final {% endif %}</h4>
+                    {% for tag in item.tags.all %}
+                    {% if forloop.first %}<h4><strong>Type</strong>:{% endif%}
+                    {% if forloop.last %} {{ tag.name }} </h4> {% else %} {{ tag.name }}, {% endif %}
+                    {% endfor %}
+                </div>
+                {% endblock %} {# text #}
+        </div>
+        {% if user.is_authenticated %}
+        {% ifnotequal user item.owner %}
         <div>
             <textarea class="msg-contact-seller"></textarea>
         </div>
-            {% endif %}
+        {% endifnotequal %}
         {% endif %}
     </div>
     <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        {% if user.is_authenticated %}
-            {% if user = item.owner%}
-                <button class="btn btn-primary">Delete Item</button> 
-            {% else %}
-                <button class="btn btn-primary">Contact Seller</button> 
-            {% endif %}
-            <input type="hidden" name="{{item.id}}"/>
+        {% if user.is_authenticated%}
+        {% ifnotequal user item.owner %}
+        <button class="btn btn-primary">Contact Seller</button> 
+        <input type="hidden" name="{{item.id}}"/>
+        {% endifnotequal %}
         {% else %}
-            <div style="position:relative; bottom:0;width:100%;left:0;height:30px;background-color:'red'; margin:5px 10px 3px 2px;padding:3px 3px 3px 10px;">
-                <h4 class="pull-left" style="color:#ddd;">Please Login to contact seller</h4>
-            </div>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <div style="position:relative; bottom:0;width:100%;left:0;height:30px;background-color:#434; margin:5px 10px 3px 2px;padding:3px 3px 3px 10px;">
+            <h4 class="pull-left" style="color:#ddd;">Login to contact seller</h4>
+        </div>
         {% endif %}
-
     </div>
-    
-</div>
-</div>'
+    </div>
+{% endblock %}

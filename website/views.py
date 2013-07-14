@@ -145,18 +145,6 @@ def register(request):
     )
 
 
-def testHenry(request):
- list_of_my_items = Item.objects.filter(owner=request.user)
- form = PasswordResetForm()
- print list_of_my_items
- print "request.user is" + str(request.user.id)
- return render_to_response('newTemplateForProfile.html', {'items': list_of_my_items, 'user': request.user, 'form': form})
-
-def testDavid(request):
-    form = SearchForm()
-    return render_to_response('search.html',{'form':form})
-
-
 def search(request):
     if request.method == 'GET':
         form = SearchForm(request.GET)
@@ -173,6 +161,7 @@ def search(request):
     else:
         return HttpResponseRedirect('/')
 
+
 @csrf_exempt
 def reset_password(request):
     if request.method == 'POST':
@@ -185,6 +174,8 @@ def reset_password(request):
                 request.user.set_password(new_Password)
     else:
         form = PasswordResetForm()
+        return render_to_response('myProfile.html' , {'user': request.user, 'form': form})
+
 
 @login_required
 def messages(request):
@@ -267,12 +258,13 @@ def start_thead(request):
     return HttpResponse(json.dumps({'response':'OK'}),content_type="application/json")
 
 
-def goToProfile(request):
- form = PasswordResetForm()
- return render_to_response('myProfile.html' , {'user': request.user, 'form': form})
-
 def goToMyItems(request):
-     list_of_my_items = Item.objects.filter(owner=request.user)
-     print list_of_my_items
-     print "request.user is" + str(request.user.id)
-     return render_to_response('myItems.html', {'items': list_of_my_items, 'user': request.user})
+   list_of_my_items = Item.objects.filter(owner=request.user)
+   print list_of_my_items
+   print "request.user is" + str(request.user.id)
+   return render_to_response('myItems.html', {'items': list_of_my_items, 'user': request.user})
+
+def item(request, item_id):
+    "returns a page for a single item"
+    item = Item.objects.filter(id= int(item_id))[0]
+    return render_to_response('single_item.html',{'user' : request.user, 'item':item})
