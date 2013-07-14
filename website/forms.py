@@ -83,9 +83,9 @@ class ItemForm(TeachForm):
                                 )
 
     CATEGORY_CHOICES = (
-        ('0',u'Item'),
-        ('1',u'Service/Job'),
-        ('2',u'Housing'),
+        ('Item',u'Item'),
+        ('Service/Job',u'Service/Job'),
+        ('Housing',u'Housing'),
     )
 
     item_category = forms.ChoiceField(

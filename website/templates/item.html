@@ -3,7 +3,7 @@
     <div class="span12 well" id="{{item.id}}" style="height:140px;">
         <a href="#myModal{{item.id}}" class="no-links" role="button" data-toggle="modal">
             <div class="row-fluid">
-                <div class="span6 text-fix">
+                <div class="span8 text-fix">
                     <h3><strong>{{item.name}}</strong></h3>
                     {% for tag in item.tags.all %}
                     {% if forloop.first%}<strong>Type: </strong>{% endif%}
@@ -17,24 +17,21 @@
                        {% endcomment %}
                     </div>
                 </div>
-                <div class="span6">
+                <div class="span4">
                     <div class="row">
                         {%if item.image_first %}
                         <div class="span4">
                             <img alt="image" src="{{ item.image_first.url }}" class="hoverImages" />
                         </div>
                         {% endif %}
-                        
                         {%if item.image_second %}
-                        <div class="span4">
-                            
+                        <div class="span4">       
                             <img alt="image" src="{{ item.image_second.url }}" class="hoverImages" />
                         </div>
                         {% endif %}
                         {%if item.image_third %}
                         <div class="span4">
-                            <img alt="image_third" src="{{ item.image_third.url }}" class="hoverImages" />
-                            
+                            <img alt="image_third" src="{{ item.image_third.url }}" class="hoverImages" />         
                         </div>
                         {% endif %}
                     </div>
@@ -53,15 +50,45 @@
         </div>
         <div class="modal-body item-page">
             <div class="row">
-                <div class="span2">
-                    {% if item.image %}
-                    <img src="{{item.image.url}}" width="100px" height="100px"/>
-                    {% else %}
-                    <img src="http://placehold.it/100"/>
-                    {% endif %}
+                <div class="span12">
+                    <div id="myCarousel" class="carousel slide">
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ol>
+                    <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            <div class="active item">
+                                    {% if item.image_first %}
+                                    <img src="{{item.image_first.url}}" width="100px" height="100px"/>
+                                    {% else %}
+                                    <img src="http://placehold.it/100"/>
+                                    {% endif %}
+                            </div>
+                            <div class="item">
+                                    {% if item.image_second %}
+                                    <img src="{{item.image_second.url}}}" width="100px" height="100px"/>
+                                    {% else %}
+                                    <img src="http://placehold.it/100"/>
+                                    {% endif %}
+                            </div>
+                            <div class="item">
+                                    {% if item.image_third %}
+                                    <img src="{{item.image_third.url}}}" width="100px" height="100px"/>
+                                    {% else %}
+                                    <img src="http://placehold.it/100"/>
+                                    {% endif %}
+                            </div>
+                        </div>
+                    <!-- Carousel nav -->
+                        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                    </div>
                 </div>
                 {% block text %}
-                <div class="span6 offset1">
+                <div class="span10 offset1">
+                    <h4><strong>Category</strong> : {{item.category}}</h4>
                     <h4><strong>Description</strong> : {{item.description}}</h4>
                     <h4><strong>Price </strong> : {{item.price}}  {% if item.negotiable %} Negotiable {% else %} Final {% endif %}</h4>
                     {% for tag in item.tags.all %}
