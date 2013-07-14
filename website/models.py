@@ -37,10 +37,9 @@ class Item(models.Model):
         (JUNIOR, 'Junior'),
         (SENIOR, 'Senior'),
     )
-    sellOrLookFor = models.CharField(max_length=15, 
-                                    choices=YEAR_IN_SCHOOL_CHOICES,
-                                      default=FRESHMAN)
-    """
+"""
+    sellOrLookFor = models.CharField(max_length=30, null=True, blank=True)
+
     category = models.CharField(max_length=20)
 
     price=models.DecimalField(max_digits=10,decimal_places=2)
