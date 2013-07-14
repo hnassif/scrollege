@@ -71,11 +71,35 @@ class ItemForm(TeachForm):
     #         self.fields[field].widget.attrs['class'] = 'controls'
     #         print type(self.fields[field].label)
 
+    MY_CHOICES = (
+    ('0',u'Selling'),
+    ('1',u'Looking for'),
+)
+
+    item_sellOrLookFor = forms.ChoiceField(
+                                label= ' I am ',
+                                required=True,    
+                                choices = MY_CHOICES,
+                                )
+
+    CATEGORY_CHOICES = (
+    ('0',u'Item'),
+    ('1',u'Service/Job'),
+    ('2',u'Housing'),
+)
+
+    item_category = forms.ChoiceField(
+                                label= 'Category',
+                                required=True,    
+                                choices = CATEGORY_CHOICES,
+                                )
+
     item_name= forms.CharField(
 		required= True,
         label = 'Name'
         # attrs={'class':'special'}
     )
+
     item_tags = TagField(
         label= 'Tags',
         required = False,
@@ -94,11 +118,20 @@ class ItemForm(TeachForm):
         required=False,
         label= 'Price Negotiable'
     )
-    # item_image= forms.ImageField(
-    #     required=False,
-    #     label= 'Images (Optional)'
-    # )
-    image = forms.FileField(
+
+    image_first = forms.FileField(
+        label='Upload an image (optional)',
+        help_text='max. 42 megabytes',
+        required=False
+    )
+
+    image_second = forms.FileField(
+        label='Upload an image (optional)',
+        help_text='max. 42 megabytes',
+        required=False
+    )
+
+    image_third = forms.FileField(
         label='Upload an image (optional)',
         help_text='max. 42 megabytes',
         required=False

@@ -1,6 +1,6 @@
 
 <!-- single box-->
-<div class="span4 well" id="{{item.id}}" style="height:140px;">
+<div class="span4 well" id="{{item.id}}" style="height:200px;">
     <a href="#myModal{{item.id}}" class="no-links" role="button" data-toggle="modal">
         <div class="row-fluid">
             <div class="span8 text-fix">
@@ -18,8 +18,18 @@
                 </div>
             </div>
             <div class="span4">
-                {%if item.image %}
-                <img alt="image" src="{{ item.image.url }}" class="hoverImages" width=100px height=100px/>
+                {%if item.image_first %}
+                <img alt="image" src="{{ item.image_first.url }}" class="hoverImages" width=100px height=100px/>
+                {% else %}
+                <img alt="image" src="http://placehold.it/100" class="hoverImages" width=100px height=100px/>
+                {% endif %}
+                {%if item.image_second %}
+                <img alt="image" src="{{ item.image_second.url }}" class="hoverImages" width=100px height=100px/>
+                {% else %}
+                <img alt="image" src="http://placehold.it/100" class="hoverImages" width=100px height=100px/>
+                {% endif %}
+                {%if item.image_third %}
+                <img alt="image" src="{{ item.image_third.url }}" class="hoverImages" width=100px height=100px/>
                 {% else %}
                 <img alt="image" src="http://placehold.it/100" class="hoverImages" width=100px height=100px/>
                 {% endif %}
@@ -37,8 +47,8 @@
     <div class="modal-body item-page">
         <div class="row">
             <div class="span2">
-                {% if item.image %}
-                <img src="{{item.image.url}}" width="100px" height="100px"/>
+                {% if item.image_first %}
+                <img src="{{item.image_first.url}}" width="100px" height="100px"/>
                 {% else %}
                 <img src="http://placehold.it/100"/>
                 {% endif %}
@@ -71,12 +81,12 @@
             {% endif %}
             <input type="hidden" name="{{item.id}}"/>
         {% else %}
-            <div style="position:relative; bottom:0;width:100%;left:0;height:30px;background-color:#434; margin:5px 10px 3px 2px;padding:3px 3px 3px 10px;">
-                <h4 class="pull-left" style="color:#ddd;">Login to contact seller</h4>
+            <div style="position:relative; bottom:0;width:100%;left:0;height:30px;background-color:'red'; margin:5px 10px 3px 2px;padding:3px 3px 3px 10px;">
+                <h4 class="pull-left" style="color:#ddd;">Please Login to contact seller</h4>
             </div>
         {% endif %}
 
     </div>
-    {% endif %}
+    
 </div>
 </div>'
