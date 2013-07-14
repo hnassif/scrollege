@@ -37,8 +37,11 @@ class Item(models.Model):
         (JUNIOR, 'Junior'),
         (SENIOR, 'Senior'),
     )
-"""
+
+    """
+
     sellOrLookFor = models.CharField(max_length=30, null=True, blank=True)
+
 
     category = models.CharField(max_length=20)
 

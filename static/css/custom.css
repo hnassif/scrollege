@@ -15,8 +15,8 @@ img.hoverImages:hover {
     margin-top: -15px;
 }
 .hoverImages{
-  max-width: 100px;
-  max-height: 100px;
+  width: 100px;
+  height: 100px;
 }
 .footer{
       width: 100%;
@@ -48,4 +48,8 @@ a.no-links{
   text-shadow: 0 1px 0 #ffffff;
   opacity: 0.4;
   padding-left: 3px;
+}
+.item img{
+  width: 100px;
+  height: 100px;
 }
