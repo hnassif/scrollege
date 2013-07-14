@@ -40,3 +40,8 @@ textarea.msg-contact-seller{
 a.no-links{
   color:#222;
 }
+.permalink{
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.4;
+  padding-left: 3px;
+}

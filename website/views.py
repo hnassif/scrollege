@@ -257,3 +257,8 @@ def goToMyItems(request):
    print list_of_my_items
    print "request.user is" + str(request.user.id)
    return render_to_response('myItems.html', {'items': list_of_my_items, 'user': request.user})
+
+def item(request, item_id):
+    "returns a page for a single item"
+    item = Item.objects.filter(id= int(item_id))[0]
+    return render_to_response('single_item.html',{'user' : request.user, 'item':item})

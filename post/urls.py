@@ -26,5 +26,7 @@ urlpatterns = patterns('',
                        url(r'^api/item$',views.item_messages),
                        url(r'^api/thread$',views.message_thread),
                        url(r'^api/send$', views.send_message),
-                       url(r'^api/handshake',views.start_thead)
+                       url(r'^api/handshake',views.start_thead),
+                       #items page
+                       url(r'^item/(?P<item_id>\d+)$',views.item)
                        ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
