@@ -1,11 +1,10 @@
 <!-- single box-->
 {% block mini%}
-    <div class="span4 well" id="{{item.id}}" style="height:140px;">
+    <div class="span12 well" id="{{item.id}}" style="height:140px;">
         <a href="#myModal{{item.id}}" class="no-links" role="button" data-toggle="modal">
             <div class="row-fluid">
                 <div class="span8 text-fix">
-                    <strong>Name: </strong>{{item.name}}
-                    <br/>
+                    <h3><strong>{{item.name}}</strong></h3>
                     {% for tag in item.tags.all %}
                     {% if forloop.first%}<strong>Type: </strong>{% endif%}
                     {% if forloop.last %} {{ tag.name }} {% else %} {{ tag.name }}, {% endif %}
@@ -33,9 +32,9 @@
 {% block modal %}
     {%block modal_div %}<div id="myModal{{item.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">{% endblock %}
         <div class="modal-header">
-            <h6 class="permalink"><a href="/item/{{item.id}}">Permalink</a></h6>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">{{item.name}}</h3>
+            <h6 class="permalink"><a href="/item/{{item.id}}">Permalink</a></h6>
         </div>
         <div class="modal-body item-page">
             <div class="row">
