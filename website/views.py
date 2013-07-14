@@ -82,7 +82,11 @@ def post_item(request):
                 name=form.cleaned_data['item_name'],
                 # type=form.cleaned_data['item_type'],
                 # item_image=request.FILES['item_image'],
-                image = form.cleaned_data['image'],
+                image_first = form.cleaned_data['image_first'],
+                image_second= form.cleaned_data['image_second'],
+                image_third= form.cleaned_data['image_third'],
+                sellOrLookFor = form.cleaned_data['item_sellOrLookFor'],
+                category = form.cleaned_data['item_category'],
                 price=form.cleaned_data['item_price'],
                 negotiable=form.cleaned_data['item_negotiable'],
                 owner=request.user,
@@ -157,7 +161,9 @@ def search(request):
     else:
         return HttpResponseRedirect('/')
 
-def profile(request):
+
+@csrf_exempt
+def reset_password(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
@@ -165,7 +171,7 @@ def profile(request):
             new_Password=form.cleaned_data['new_Password']
             confirm_New_Password=form.cleaned_data['confirm_New_Password']
             if new_Password == confirm_New_Password and user.check_password(old_password):
-                request.user.set_password(newPassword)
+                request.user.set_password(new_Password)
     else:
         form = PasswordResetForm()
         return render_to_response('myProfile.html' , {'user': request.user, 'form': form})

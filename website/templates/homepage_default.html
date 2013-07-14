@@ -24,6 +24,14 @@
 		});
 		$('#myModal'+id).modal('hide');
 	});
+
+		$('.modal-footer .btn-primary').click(function(event){
+		var id = $(event.target.parentNode.parentNode).find('input[type=hidden]').attr("name");
+		$.post('/api/handshake',{item_id:id},function(data){
+			console.log('successful call for deleting item function');
+		});
+		
+	});
 </script>
 {% endif %}
 {% endblock %}

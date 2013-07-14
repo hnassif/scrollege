@@ -20,7 +20,7 @@ urlpatterns = patterns('',
                        url(r'^accounts/login/$', views.sign_in),
                        url(r'^search', views.search, name='search'),
                        url(r'^messages$',views.messages, name='messages'),
-                       url(r'^profile$',views.profile, name='profile'),
+                       url(r'^profile$',views.reset_password, name='profile'),
                        url(r'^myItems$',views.goToMyItems, name='myItems'),
                        # JSON api
                        url(r'^api/item$',views.item_messages),
