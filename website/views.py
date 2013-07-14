@@ -22,6 +22,7 @@ from django.contrib.auth.decorators import login_required
 
 from forms import RegForm, SignInForm, ItemForm, SearchForm, PasswordResetForm
 from models import Item, Message
+from django.core.mail import send_mail
 
 
 def home(request):
@@ -248,13 +249,25 @@ def start_thead(request):
         if all(key in request.POST for key in ('message','item_id')):
             # print "all is well"
             temp_item = Item.objects.filter(id=int(request.POST['item_id']))[0]
+
             if temp_item:
+                subject = 're: '+temp_item.name
+                message = request.POST['message'].strip()
+                if message:
+                    full_message = sender.first_name + ' '+sender.last_name+' ('+sender.email+') is interested in '\
+                    +temp_item.name+' \nPlease contact them to complete the transaction.\n'\
+                    +'========================begin============================='+'\n\n'+message+'\n\n'\
+                    +'========================+end+============================='
+                    send_mail(subject, full_message, 'mitpost-admin@mit.edu',
+                                    [temp_item.owner.email], fail_silently=False)
                 Message(
                     content = request.POST['message'].strip(),
                     sender = request.user,
                     receiver = temp_item.owner,
                     item = temp_item,
                     ).save();
+            else:
+                return HttpResponse(json.dumps({'response':'OK'}),content_type="application/json")
     return HttpResponse(json.dumps({'response':'OK'}),content_type="application/json")
 
 

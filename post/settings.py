@@ -8,6 +8,10 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+# dummy emails. remove before deployment
+if (DEBUG):
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 MANAGERS = ADMINS
 PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 SITE_ROOT = os.path.dirname(PROJECT_ROOT)
