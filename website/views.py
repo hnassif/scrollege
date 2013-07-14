@@ -141,18 +141,6 @@ def register(request):
     )
 
 
-def testHenry(request):
- list_of_my_items = Item.objects.filter(owner=request.user)
- form = PasswordResetForm()
- print list_of_my_items
- print "request.user is" + str(request.user.id)
- return render_to_response('newTemplateForProfile.html', {'items': list_of_my_items, 'user': request.user, 'form': form})
-
-def testDavid(request):
-    form = SearchForm()
-    return render_to_response('search.html',{'form':form})
-
-
 def search(request):
     if request.method == 'GET':
         form = SearchForm(request.GET)
@@ -169,7 +157,7 @@ def search(request):
     else:
         return HttpResponseRedirect('/')
 
-def reset_password(request):
+def profile(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
@@ -180,6 +168,8 @@ def reset_password(request):
                 request.user.set_password(newPassword)
     else:
         form = PasswordResetForm()
+        return render_to_response('myProfile.html' , {'user': request.user, 'form': form})
+
 
 @login_required
 def messages(request):
@@ -262,12 +252,8 @@ def start_thead(request):
     return HttpResponse(json.dumps({'response':'OK'}),content_type="application/json")
 
 
-def goToProfile(request):
- form = PasswordResetForm()
- return render_to_response('myProfile.html' , {'user': request.user, 'form': form})
-
 def goToMyItems(request):
-     list_of_my_items = Item.objects.filter(owner=request.user)
-     print list_of_my_items
-     print "request.user is" + str(request.user.id)
-     return render_to_response('myItems.html', {'items': list_of_my_items, 'user': request.user})
+   list_of_my_items = Item.objects.filter(owner=request.user)
+   print list_of_my_items
+   print "request.user is" + str(request.user.id)
+   return render_to_response('myItems.html', {'items': list_of_my_items, 'user': request.user})

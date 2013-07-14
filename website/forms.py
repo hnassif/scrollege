@@ -3,7 +3,7 @@ from django.core.exceptions import NON_FIELD_ERRORS
 from django.forms.widgets import CheckboxSelectMultiple
 from taggit.forms import TagWidget, TagField
 
-class TeachForm(forms.Form):
+class PostForm(forms.Form):
     def addError(self, message):
         self._errors[NON_FIELD_ERRORS] = self.error_class([message])
 
@@ -12,7 +12,8 @@ class SearchForm(forms.Form):
         required=True,
         label = 'Search'
         )
-class RegForm(TeachForm):
+
+class RegForm(PostForm):
     firstname = forms.CharField(
         required=True,
         label='First Name'
@@ -52,7 +53,7 @@ class RegForm(TeachForm):
         return cleaned_data
 
 
-class SignInForm(TeachForm):
+class SignInForm(PostForm):
 
     signin_email = forms.EmailField(
         required=True,
@@ -64,9 +65,9 @@ class SignInForm(TeachForm):
         widget=forms.PasswordInput(render_value=False)
     )
 
-class ItemForm(TeachForm):
+class ItemForm(PostForm):
     # def __init__(self, *args, **kwargs):
-    #     super(TeachForm, self).__init__(*args, **kwargs)
+    #     super(PostForm, self).__init__(*args, **kwargs)
     #     for field in self.fields:
     #         self.fields[field].widget.attrs['class'] = 'controls'
     #         print type(self.fields[field].label)
@@ -104,7 +105,7 @@ class ItemForm(TeachForm):
         required=False
     )
 
-class PasswordResetForm(TeachForm):
+class PasswordResetForm(PostForm):
 
     old_Password= forms.CharField(
         required= True

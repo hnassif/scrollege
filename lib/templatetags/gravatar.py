@@ -14,8 +14,9 @@ import urllib, hashlib
 register = template.Library()
 
 class GravatarUrlNode(template.Node):
-    def __init__(self, email):
+    def __init__(self, email, size=40):
         self.email = template.Variable(email)
+        self.size = size
 
     def render(self, context):
         try:
@@ -23,11 +24,11 @@ class GravatarUrlNode(template.Node):
         except template.VariableDoesNotExist:
             return ''
 
-        default = "http://placehold.it/40x40"
-        size = 40
+        default = "http://placehold.it/100"
+        # size = 40
 
         gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
-        gravatar_url += urllib.urlencode({'d':default, 's':str(size)})
+        gravatar_url += urllib.urlencode({'d':default, 's':str(self.size)})
 
         return gravatar_url
 
