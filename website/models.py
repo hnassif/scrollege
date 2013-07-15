@@ -25,26 +25,8 @@ class Course(models.Model):
 class Item(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     name= models.CharField(max_length=200)
-
-    """
-    FRESHMAN = 'FR'
-    SOPHOMORE = 'SO'
-    JUNIOR = 'JR'
-    SENIOR = 'SR'
-    YEAR_IN_SCHOOL_CHOICES = (
-        (FRESHMAN, 'Freshman'),
-        (SOPHOMORE, 'Sophomore'),
-        (JUNIOR, 'Junior'),
-        (SENIOR, 'Senior'),
-    )
-
-    """
-
     sellOrLookFor = models.CharField(max_length=30, null=True, blank=True)
-
-
     category = models.CharField(max_length=20)
-
     price=models.DecimalField(max_digits=10,decimal_places=2)
     negotiable = models.BooleanField(default=False)
     owner=models.ForeignKey(User)
@@ -56,6 +38,7 @@ class Item(models.Model):
     image_third = models.FileField(upload_to='documents_second/%Y/%m/%d',
         blank=True)
     tags = TaggableManager()
+    isActive = models.BooleanField(default=True)
 
     def __str__(self):
             return str(self.pk)+' '+str(self.name) + ', ' + str(self.description) + \
