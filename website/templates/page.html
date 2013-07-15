@@ -39,7 +39,7 @@
       <li class="dropdown">
         <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Type<b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Selling</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Selling</a></li>
           <li role="presentation" class="divider"></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Looking For</a></li>
         </ul>
@@ -47,7 +47,7 @@
       <li class="dropdown">
         <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Category<b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Item</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="displayCategory()">Item</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Service/Job</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Housing</a></li>
         </ul>
@@ -95,6 +95,14 @@
     <script src="{% get_static_prefix %}js/bootstrap-collapse.js"></script>
     <script src="{% get_static_prefix %}js/bootstrap-carousel.js"></script>
     <script src="{% get_static_prefix %}js/bootstrap-typeahead.js"></script>
+    <script>
+    function displayCategory()
+    {
+    var content = this.innerHTML;
+    var content2 = content.toString();
+    $('#drop2').html(content.concat('<b class="caret"></b>'));
+    }
+</script>
     {% block tail %}{% endblock %}
     <footer>
       <div class="footer">
