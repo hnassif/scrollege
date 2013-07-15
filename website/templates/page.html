@@ -29,7 +29,6 @@
         {% comment %}<li><a href="#">{{user.first_name}}'s Account</a></li>{% endcomment %}
         <li><a href="{% url "myItems" %}">My Items</a></li>
         <li><a href="{% url "profile" %}">My Profile</a></li>
-        <li><a href="{% url "messages" %}">Messages</a></li>
         {% endif %}
         {% if not user.is_authenticated %}
       <li><a href="{% url "register"%}">Register</a></li>
@@ -38,18 +37,20 @@
     <ul class="nav pull-right">
       <li class="dropdown">
         <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Type<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+        <ul id="drop1-ul" class="dropdown-menu" role="menu" aria-labelledby="drop1">
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Selling</a></li>
           <li role="presentation" class="divider"></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Looking For</a></li>
         </ul>
-      </li>
+      </li> 
       <li class="dropdown">
         <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Category<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="displayCategory()">Item</a></li>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="drop2" id="drop2-ul">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Housing</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Item</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Service/Job</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Housing</a></li>
+
         </ul>
       </li>
       <form class="navbar-search" accept-charset="UTF-8" action="{% url "search" %}"  method="get">
@@ -96,12 +97,20 @@
     <script src="{% get_static_prefix %}js/bootstrap-carousel.js"></script>
     <script src="{% get_static_prefix %}js/bootstrap-typeahead.js"></script>
     <script>
-    function displayCategory()
-    {
-    var content = this.innerHTML;
-    var content2 = content.toString();
-    $('#drop2').html(content.concat('<b class="caret"></b>'));
-    }
+
+
+    $('#drop1-ul').click(function(evt){
+      var target = $(evt.target);
+      console.log(""+ target.html()+' has been clicked');
+      $('#drop1').html(target.html()+'<b class="caret"></b>');
+    });
+
+    $('#drop2-ul').click(function(evt){
+      var target = $(evt.target);
+      console.log(""+ target.html()+' has been clicked');
+      $('#drop2').html(target.html()+'<b class="caret"></b>');
+
+    })
 </script>
     {% block tail %}{% endblock %}
     <footer>
