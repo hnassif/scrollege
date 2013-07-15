@@ -61,6 +61,23 @@ a.no-links{
 .item-strip{
   padding-top:0px;
 }
+<<<<<<< HEAD
 #type-dropdown.hasFilter, #category-dropdown.hasFilter {
   color: #5cff5c;
+=======
+.well  img {
+  padding-top:10px;
+  margin-top:10px;
+  padding:1px;
+  border:thin solid black;
+  }
+.Item { 
+  background-color: blue;
+}
+.ServiceJob { 
+  background-color: yellow;
+}
+.Housing { 
+  background-color: red;
+>>>>>>> ac6fde2d4549e12ebef7b59e6d99013a33a29672
 }
