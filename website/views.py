@@ -26,15 +26,8 @@ from django.core.mail import send_mail
 
 
 def home(request):
-    q = Item.objects.all().reverse()[:20]
+    q = Item.objects.all().reverse()[:40]
     return render_to_response('homepage_default.html', {'items': q, 'user': request.user})
-
-# @login_required
-# def my_items(request):
-#     list_of_my_items = Item.objects.filter(owner=User.objects.filter(id=request.user.id)[0])
-#     print list_of_my_items
-#     print "request.user is" + str(request.user.id)
-#     return render_to_response('my_items.html', {'items': list_of_my_items, 'user': request.user})
 
 def sign_in(request):
     if request.user.is_authenticated():
@@ -153,11 +146,11 @@ def search(request):
             print "search form is valid"
         raw_q = request.GET['q']
         q = raw_q.strip()
-        items = Item.objects.filter(name__icontains=q) | \
+        items = Item.objects.filter(active = True).filter(name__icontains=q) | \
                 Item.objects.filter(description__icontains=q)
                 #  | \
                 # Item.objects.filter(tags__search=q)
-        return render_to_response('search_results.html', {'items':items, 'q':q})
+        return render_to_response('search_results.html', {'items':items, 'q':q, 'user':request.user})
 
     else:
         return HttpResponseRedirect('/')
@@ -165,17 +158,26 @@ def search(request):
 
 @csrf_exempt
 def reset_password(request):
+    feedback = []
     if request.method == 'POST':
+        print "received password data"
         form = PasswordResetForm(request.POST)
         if form.is_valid():
+            print "form is valid"
             old_Password=form.cleaned_data['old_Password']
             new_Password=form.cleaned_data['new_Password']
             confirm_New_Password=form.cleaned_data['confirm_New_Password']
-            if new_Password == confirm_New_Password and user.check_password(old_password):
+            if (new_Password == confirm_New_Password) and request.user.check_password(old_Password):
                 request.user.set_password(new_Password)
-    else:
-        form = PasswordResetForm()
-        return render_to_response('myProfile.html' , {'user': request.user, 'form': form})
+                request.user.save()
+                feedback.append("password has been reset.")
+            else:    
+                feedback.append("An Error occurred.")
+        else:
+            feedback.append("An Error occurred.")
+
+    form = PasswordResetForm()
+    return render_to_response('myProfile.html' , {'user': request.user, 'form': form, 'feedback':feedback})
 
 
 @login_required

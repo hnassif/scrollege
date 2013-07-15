@@ -36,20 +36,22 @@
     </ul>
     <ul class="nav pull-right">
       <li class="dropdown">
-        <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Type<b class="caret"></b></a>
-        <ul id="drop1-ul" class="dropdown-menu" role="menu" aria-labelledby="drop1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Selling</a></li>
+        <a id="type-dropdown" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">filter<b class="caret"></b></a>
+        <ul id="type-dropdown-ul" class="dropdown-menu" role="menu" aria-labelledby="type-dropdown">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">being sold</a></li>
           <li role="presentation" class="divider"></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Looking For</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">needed</a></li>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">both</a></li>
         </ul>
       </li> 
       <li class="dropdown">
-        <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Category<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="drop2" id="drop2-ul">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Housing</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Item</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Service/Job</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Housing</a></li>
+        <a href="#" id="category-dropdown" role="button" class="dropdown-toggle" data-toggle="dropdown">category<b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="category-dropdown" id="category-dropdown-ul">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">item</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">service/Job</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">housing</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">all</a></li>
 
         </ul>
       </li>
@@ -96,22 +98,8 @@
     <script src="{% get_static_prefix %}js/bootstrap-collapse.js"></script>
     <script src="{% get_static_prefix %}js/bootstrap-carousel.js"></script>
     <script src="{% get_static_prefix %}js/bootstrap-typeahead.js"></script>
-    <script>
 
-
-    $('#drop1-ul').click(function(evt){
-      var target = $(evt.target);
-      console.log(""+ target.html()+' has been clicked');
-      $('#drop1').html(target.html()+'<b class="caret"></b>');
-    });
-
-    $('#drop2-ul').click(function(evt){
-      var target = $(evt.target);
-      console.log(""+ target.html()+' has been clicked');
-      $('#drop2').html(target.html()+'<b class="caret"></b>');
-
-    })
-</script>
+    <script src="{% get_static_prefix %}js/search.js"></script>
     {% block tail %}{% endblock %}
     <footer>
       <div class="footer">

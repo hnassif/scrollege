@@ -61,3 +61,6 @@ a.no-links{
 .item-strip{
   padding-top:0px;
 }
+#type-dropdown.hasFilter, #category-dropdown.hasFilter {
+  color: #5cff5c;
+}

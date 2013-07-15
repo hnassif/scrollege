@@ -2,6 +2,17 @@
 {% load gravatar %}
 {% block main %}
 
+{% if feedback%}
+<div class="row">
+  <div class="span12 alert alert-info">
+    <ul>
+    {% for tidbit in feedback %}
+    <li>{{tidbit}}
+    {% endfor %}
+  </ul>
+  </div>
+</div>
+{% endif %}
 
 <div class="clearfix">
     <img src="{% gravatar_url user.email %}" class="img-polaroid clearfix" style="height:100px;width:100px" >
@@ -40,8 +51,7 @@
     </div>
     <div class="modal-body">
 
-        <form accept-charset="UTF-8" action="{% url "post_item" %}" class="form-stacked" method="post">
-            {% csrf_token %}
+        <form accept-charset="UTF-8" action="{% url "profile" %}" class="form-stacked" method="post">
             {% if form.is_bound and not form.is_valid %}
             <div class="alert-message block-message error">
                 <div class="errors">
@@ -61,7 +71,5 @@
     </div>
 
 </div>
-
-
 
 {% endblock %}
