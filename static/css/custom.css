@@ -53,3 +53,11 @@ a.no-links{
   width: 100px;
   height: 100px;
 }
+.carousel-inner > .item > img { 
+  margin: 0 auto; 
+  height: 300px;
+  width: auto;
+}
+.item-strip{
+  padding-top:0px;
+}
