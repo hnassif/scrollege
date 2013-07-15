@@ -1,6 +1,6 @@
 <!-- single box-->
 {% block mini%}
-    <div class="span12 well item-strip" id="{{item.id}}" style="height:140px;">
+    <div class="span12 well item-strip {{item.category}}" id="{{item.id}}" style="height:140px;">
         <a href="#myModal{{item.id}}" class="no-links" role="button" data-toggle="modal">
             <div class="row-fluid">
                 <div class="span8 text-fix">
@@ -46,6 +46,7 @@
         </div>
         <div class="modal-body item-page">
             <div class="row-fluid">
+                {% if item.image_first %}
                 <div class="span12">
                     <div id="myCarousel{{item.id}}" class="carousel slide">
                       <ol class="carousel-indicators">
@@ -73,6 +74,7 @@
                       <a class="left carousel-control" href="#myCarousel{{item.id}}" data-slide="prev">‹</a>
                       <a class="right carousel-control" href="#myCarousel{{item.id}}" data-slide="next">›</a>
                     </div>
+                    {% endif %}
                 </div>
                 {% block text %}
                 <div class="span10 offset1">
@@ -97,7 +99,7 @@
     <div class="modal-footer">
         {% if user.is_authenticated%}
         {% ifnotequal user item.owner %}
-        <button class="btn btn-primary">Contact Seller</button> 
+        <button class="btn btn-primary">Send Message to Seller</button> 
         <input type="hidden" name="{{item.id}}"/>
         {% endifnotequal %}
         {% else %}

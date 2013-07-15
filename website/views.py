@@ -114,24 +114,27 @@ def register(request):
     if request.method == 'POST':
         form = RegForm(request.POST)
         if form.is_valid():
-            user = User(
-                first_name=form.cleaned_data['firstname'],
-                last_name=form.cleaned_data['lastname'],
-                email=form.cleaned_data['email'],
-                username=form.cleaned_data['email']
-            )
-            user.set_password(form.cleaned_data['password1'])
-            try:
-                user.save()
-            except IntegrityError:
-                form.addError(user.email + ' is already a member')
+            if form.cleaned_data['email'].find('@mit.edu')!=-1:
+                user = User(
+                    first_name=form.cleaned_data['firstname'],
+                    last_name=form.cleaned_data['lastname'],
+                    email=form.cleaned_data['email'],
+                    username=form.cleaned_data['email']
+                )
+                user.set_password(form.cleaned_data['password1'])
+                try:
+                    user.save()
+                except IntegrityError:
+                    form.addError(user.email + ' is already a member')
+                else:
+                    user = authenticate(username=form.cleaned_data['email'],
+                                        password=form.cleaned_data['password1'])
+                    if user is not None:
+                        if user.is_active:
+                            login(request, user)
+                    return HttpResponseRedirect('/')
             else:
-                user = authenticate(username=form.cleaned_data['email'],
-                                    password=form.cleaned_data['password1'])
-                if user is not None:
-                    if user.is_active:
-                        login(request, user)
-                return HttpResponseRedirect('/')
+                form.addError("You did Not enter a valid MIT address")
     else:
         form = RegForm()
     return render_to_response(
