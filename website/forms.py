@@ -24,7 +24,7 @@ class RegForm(TeachForm):
     )
     email = forms.EmailField(
         required=True,
-        label= 'MIT email'
+        label= 'sjsu email'
     )
     """
     address = forms.CharField(
@@ -72,8 +72,8 @@ class ItemForm(TeachForm):
     #         print type(self.fields[field].label)
 
     MY_CHOICES = (
-    ('0',u'Selling'),
-    ('1',u'Looking for'),
+    (False,u'Selling'),
+    (True,u'Looking for'),
 )
 
     item_sellOrLookFor = forms.ChoiceField(

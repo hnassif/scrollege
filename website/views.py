@@ -79,7 +79,7 @@ def post_item(request):
                 image_first = form.cleaned_data['image_first'],
                 image_second= form.cleaned_data['image_second'],
                 image_third= form.cleaned_data['image_third'],
-                looking_for = form.cleaned_data['item_sellOrLookFor'],
+                looking_for = True if 'True' == form.cleaned_data['item_sellOrLookFor'] else False,
                 category = form.cleaned_data['item_category'],
                 price=form.cleaned_data['item_price'],
                 negotiable=form.cleaned_data['item_negotiable'],
@@ -107,7 +107,7 @@ def register(request):
     if request.method == 'POST':
         form = RegForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data['email'].find('@mit.edu')!=-1:
+            if True or form.cleaned_data['email'].find('@mit.edu')!=-1:
                 user = User(
                     first_name=form.cleaned_data['firstname'],
                     last_name=form.cleaned_data['lastname'],

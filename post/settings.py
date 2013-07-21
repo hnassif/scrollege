@@ -1,7 +1,8 @@
 # Django settings for post project.
 import os
 
-DEBUG = True
+#DEBUG = True
+DEBUG=False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
