@@ -79,7 +79,7 @@ def post_item(request):
                 image_first = form.cleaned_data['image_first'],
                 image_second= form.cleaned_data['image_second'],
                 image_third= form.cleaned_data['image_third'],
-                sellOrLookFor = form.cleaned_data['item_sellOrLookFor'],
+                looking_for = form.cleaned_data['item_sellOrLookFor'],
                 category = form.cleaned_data['item_category'],
                 price=form.cleaned_data['item_price'],
                 negotiable=form.cleaned_data['item_negotiable'],
@@ -174,7 +174,7 @@ def reset_password(request):
                 request.user.set_password(new_Password)
                 request.user.save()
                 feedback.append("password has been reset.")
-            else:    
+            else:
                 feedback.append("An Error occurred.")
         else:
             feedback.append("An Error occurred.")
@@ -216,7 +216,7 @@ def message_thread(request):
         thread_msgs = Message.objects.filter(item_id=item_id).filter(
             (Q(sender__id=sender_id)&Q(receiver=request.user))|(Q(sender__id=request.user.id)&(Q(receiver__id=sender_id)))).values(
             'timestamp','sender__first_name','sender__last_name','sender__email','content').order_by('-timestamp')
-        
+
         for x in thread_msgs:
             x['sender__email'] = hashlib.md5(x['sender__email']).hexdigest()
             x['timestamp'] = timesince(x['timestamp'])
@@ -244,7 +244,7 @@ def send_message(request):
                 receiver = User.objects.filter(id=int(request.POST['sender_id']))[0],
                 isRead = False
                 ).save()
-        
+
     return HttpResponse(json.dumps(1),content_type="application/json")
 
 @csrf_exempt
