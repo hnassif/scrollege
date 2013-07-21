@@ -26,7 +26,7 @@ from django.core.mail import send_mail
 
 
 def home(request):
-    q = Item.objects.all().reverse()[:40]
+    q = Item.objects.all().order_by('timestamp').reverse()
     return render_to_response('homepage_default.html', {'items': q, 'user': request.user})
 
 def sign_in(request):
