@@ -87,7 +87,7 @@
         <h4><strong>Description</strong> : {{item.description}}</h4>
         <h4><strong>Price </strong> : {{item.price}}  {% if item.negotiable %} Negotiable {% else %} Final {% endif %}</h4>
         {% for tag in item.tags.all %}
-        {% if forloop.first %}<h4><strong>Type</strong>:{% endif%}
+        {% if forloop.first %}<h4><strong>Tags</strong>:{% endif%}
         {% if forloop.last %} {{ tag.name }} </h4> {% else %} {{ tag.name }}, {% endif %}
         {% endfor %}
     </div>

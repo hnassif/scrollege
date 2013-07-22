@@ -25,7 +25,7 @@
     <ul class="nav">
         <li><a href="{% url "home" %}">Home</a></li>
         {% if user.is_authenticated %}
-        <li><a href="{% url "post_item" %}">Post Item</a></li>
+        <li><a href="{% url "post_item" %}">List</a></li>
         {% comment %}<li><a href="#">{{user.first_name}}'s Account</a></li>{% endcomment %}
         <li><a href="{% url "myItems" %}">My Items</a></li>
         <li><a href="{% url "profile" %}">My Profile</a></li>
@@ -104,7 +104,7 @@
     <footer>
       <div class="footer">
        <div class="container narrow row-fluid">
-           Made in the USA
+		SJSU post is not affiliated with the San Jose State University
        </div>
       </div>
   </footer>
