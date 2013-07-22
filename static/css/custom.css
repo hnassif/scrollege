@@ -72,7 +72,7 @@ a.no-links{
   padding:1px;
   border:thin solid black;
   }
-.Item { 
+/*.Item { 
   background-color: blue;
 }
 .ServiceJob { 
@@ -80,7 +80,10 @@ a.no-links{
 }
 .Housing { 
   background-color: red;
-}
+}*/
 .modal{
 height:80%;
+}
+.modal-body{
+height:100%;
 }
