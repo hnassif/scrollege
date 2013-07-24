@@ -144,15 +144,29 @@ def register(request):
 
 def search(request):
     if request.method == 'GET':
+        print request.GET
         form = SearchForm(request.GET)
         if form.is_valid:
-            print "search form is valid"
-        raw_q = request.GET['q']
-        q = raw_q.strip()
-        items = Item.objects.filter(active = True).filter(name__icontains=q) | \
-                Item.objects.filter(description__icontains=q)
-                #  | \
-                # Item.objects.filter(tags__search=q)
+            pass
+            # print "search form is valid"
+        q = request.GET.get('q')
+        items = Item.objects.filter(active = True)
+        
+        if q:
+            items = items.filter(name__icontains=q) | \
+                    Item.objects.filter(description__icontains=q)
+        # check for additional filters
+        if request.GET.get('need_or_sold'):
+            nos = request.GET.get('need_or_sold').strip()
+            if nos != 'unset' and nos != 'both':
+                # todo: this looks like it's wrong on the input end.
+                # had to reverse to achieve desired functionality
+                nos_filter= False if nos == 'needed' else True
+                items=items.filter(looking_for=nos_filter)
+        if request.GET.get('category'):
+            cat = request.GET.get('category').strip()
+            if cat != 'unset' and cat != 'all':
+                items = items.filter(category__icontains=cat)
         return render_to_response('search_results.html', {'items':items, 'q':q, 'user':request.user})
 
     else:
