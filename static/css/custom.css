@@ -62,6 +62,9 @@ a.no-links{
 }
 .item-strip{
   padding-top:0px;
+  border:2px solid;
+  border-radius:25px;
+  box-shadow: 10px 10px 5px #888888;
 }
 #type-dropdown.hasFilter, #category-dropdown.hasFilter {
   color: #5cff5c;
@@ -72,18 +75,37 @@ a.no-links{
   padding:1px;
   border:thin solid black;
   }
-/*.Item { 
-  background-color: blue;
+.Item { 
+  background-color: #FF82AB;
 }
 .ServiceJob { 
-  background-color: yellow;
+  background-color: #00FFFF;
 }
 .Housing { 
-  background-color: red;
-}*/
+  background-color: #00FF00;
+}
 .modal{
 height:80%;
+left: 50%;
 }
-.modal-body{
-height:100%;
+.modal-body {
+ height:70%;
+  max-height: 600px;
+  background-color: #00FFFF;
+}
+
+html {
+  background-color: #98F5FF;
+}
+
+ body {
+  background-color:#98F5FF;
+}
+.modal-footer {
+  background-color: #00FFFF;
+  margin-bottom: 0;
+  text-align: right;
+ 
+  
+
 }
