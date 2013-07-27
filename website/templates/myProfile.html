@@ -14,26 +14,29 @@
 </div>
 {% endif %}
 
-<div class="clearfix">
+<div class="row-fluid">
+  <div class="span2">
     <img src="{% gravatar_url user.email %}" class="img-polaroid clearfix" style="height:100px;width:100px" >
+  </div>
+  <div class="span5">
+    <table class="table table-bordered span12 ">
+        <tbody>
+           <tr>
+              <td>Name</td>
+              <td>{{user.first_name}} {{user.last_name}}</td>
+          </tr>
+          <tr>
+              <td>username</td>
+              <td>{{user.username}} </td>
+          </tr>
+          <tr>
+              <td>MIT email</td>
+              <td>{{user.email}}</td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
 </div>
-<table class="table table-bordered span12 ">
-    <caption>INFORMATION</caption>
-    <tbody>
-       <tr>
-          <td>Name</td>
-          <td>{{user.first_name}} {{user.last_name}}</td>
-      </tr>
-      <tr>
-          <td>username</td>
-          <td>{{user.username}} </td>
-      </tr>
-      <tr>
-          <td>MIT email</td>
-          <td>{{user.email}}</td>
-      </tr>
-</tbody>
-</table>
 
     <td><a href="#myModal" role="button" class="btn" data-toggle="modal">Reset Password</a> </td>
 <!-- Button to trigger modal -->

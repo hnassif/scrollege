@@ -4,16 +4,42 @@
 .main{
   margin-bottom: 25px;
 }
+/*
 img.hoverImages {
 	float:left;
 	-webkit-transition: margin 0.5s ease-out;
     -moz-transition: margin 0.5s ease-out;
     -o-transition: margin 0.5s ease-out;
 }
+*/
+img.hoverImages{
+-webkit-transform:scale(0.8); /*Webkit: Scale down image to 0.8x original size*/
+-moz-transform:scale(0.8); /*Mozilla scale version*/
+-o-transform:scale(0.8); /*Opera scale version*/
+-webkit-transition-duration: 0.5s; /*Webkit: Animation duration*/
+-moz-transition-duration: 0.5s; /*Mozilla duration version*/
+-o-transition-duration: 0.5s; /*Opera duration version*/
+opacity: 0.7; /*initial opacity of images*/
+margin: 0 10px 5px 0; /*margin between images*/
+}
+/*
 img.hoverImages:hover {
 	cursor:pointer;
     margin-top: -15px;
 }
+*/
+img.hoverImages:hover{
+-webkit-transform:scale(1.1); /*Webkit: Scale up image to 1.2x original size*/
+-moz-transform:scale(1.1); /*Mozilla scale version*/
+-o-transform:scale(1.1); /*Opera scale version*/
+box-shadow:0px 0px 30px gray; /*CSS3 shadow: 30px blurred shadow all around image*/
+-webkit-box-shadow:0px 0px 30px gray; /*Safari shadow version*/
+-moz-box-shadow:0px 0px 30px gray; /*Mozilla shadow version*/
+opacity: 1;
+}
+
+
+
 .hoverImages{
   width: 100px;
   height: 100px;
@@ -82,7 +108,7 @@ a.no-links{
   background-color: #00FFFF;
 }
 .Housing { 
-  background-color: #00FF00;
+  background-color: #FFD700;
 }
 .modal{
 height:80%;
@@ -91,18 +117,18 @@ left: 50%;
 .modal-body {
  height:70%;
   max-height: 600px;
-  background-color: #00FFFF;
+
 }
 
 html {
-  background-color: #98F5FF;
+  background-color: #ffd700;
 }
 
  body {
-  background-color:#98F5FF;
+  background-color:  #ffd700  ;
 }
 .modal-footer {
-  background-color: #00FFFF;
+
   margin-bottom: 0;
   text-align: right;
  
