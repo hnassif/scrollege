@@ -8,7 +8,7 @@
             {% else %}
             <div class="span6">
             {% endif %}
-                <h3>{{item.name|truncatechars:53}}</h3>
+                <h3>{{item.name|truncatechars:50}}</h3>
                 {% for tag in item.tags.all %}
                 {% if forloop.first%}<strong>Tags: </strong>{% endif%}
                 {% if forloop.last %} {{ tag.name }} {% else %} {{ tag.name }}, {% endif %}
@@ -103,26 +103,20 @@
         {% if forloop.first %}<h4><strong>Tags</strong>:{% endif%}
         {% if forloop.last %} {{ tag.name }} </h4> {% else %} {{ tag.name }}, {% endif %}
         {% endfor %}
-        <h4><strong>Price </strong> : {{item.price}}  {% if item.negotiable %} Negotiable {% endif %}</h4>
         <h4><strong>Description</strong> : {{item.description}}</h4>
         
 
     </div>
     {% endblock %} {# text #}
 
-{% if user.is_authenticated %}
-{% ifnotequal user item.owner %}
-<div>
-    <textarea class="msg-contact-seller"></textarea>
-</div>
-{% endifnotequal %}
-{% endif %}
-</div>
-<div class="modal-footer">
+
     {% if user.is_authenticated%}
     {% ifnotequal user item.owner %}
+     <textarea class="msg-contact-seller"></textarea>
     <button class="btn btn-primary">Send Message to Seller</button> 
     <input type="hidden" name="{{item.id}}"/>
+    {% else %}
+    <button class="btn btn-primary" action="{% url "myItems" %}" class="form-stacked" method="post">Remove Listing</button> 
     {% endifnotequal %}
     {% else %}
     <div style="position:relative; bottom:0;width:100%;left:0;height:30px;background-color:#434; margin:2px 10px 3px 2px;padding:3px 3px 3px 10px;">

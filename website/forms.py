@@ -96,7 +96,8 @@ class ItemForm(TeachForm):
 
     item_name= forms.CharField(
 		required= True,
-        label = 'Name'
+        label = 'Name',
+        max_length = 80
         # attrs={'class':'special'}
     )
 
@@ -112,7 +113,8 @@ class ItemForm(TeachForm):
     item_description= forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={'placeholder': 'Description of item'}),
-        label= 'Description'
+        label= 'Description',
+        help_text='Please include the price in your description'
     )
     item_negotiable= forms.BooleanField(
         required=False,

@@ -63,18 +63,17 @@
         <a href="#" role="button" class="dropdown-toggle gravatarDropdown" data-toggle="dropdown"><img src="{% gravatar_url user.email %}" class="img-polaroid " style="height:15px;width:15px" ></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="category-dropdown" id="category-dropdown-ul">
           <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "sign_out" %}">Sign Out</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#myModal" data-toggle="modal">Reset Password</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#passModal" data-toggle="modal">Reset Password</a></li>
         </ul>
       </li>
 
 <!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="passModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Password Reset</h3>
     </div>
     <div class="modal-body">
-
         <form accept-charset="UTF-8" action="{% url "profile" %}" class="form-stacked" method="post">
             {% if form.is_bound and not form.is_valid %}
             <div class="alert-message block-message error">

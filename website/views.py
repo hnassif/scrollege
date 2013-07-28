@@ -197,6 +197,11 @@ def reset_password(request):
     return render_to_response('myProfile.html' , {'user': request.user, 'form': form, 'feedback':feedback})
 
 
+def remove_listing(request):
+
+    render_to_response('myItems.html')
+
+
 @login_required
 def messages(request):
     if request.user.is_authenticated():
@@ -291,7 +296,7 @@ def start_thead(request):
 
 
 def goToMyItems(request):
-   list_of_my_items = Item.objects.filter(owner=request.user)
+   list_of_my_items = Item.objects.filter(owner=request.user).reverse()
    print list_of_my_items
    print "request.user is" + str(request.user.id)
    return render_to_response('myItems.html', {'items': list_of_my_items, 'user': request.user})
