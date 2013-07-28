@@ -1,6 +1,6 @@
 <!-- single box-->
 {% block mini%}
-<div class="span12 well item-strip {{item.category}}" id="{{item.id}}" style="height:140px;">
+<div class="span12 well item-strip {% if item.looking_for %} buying {% else %} selling {% endif %}" id="{{item.id}}" style="height:140px;">
     <a href="#myModal{{item.id}}" class="no-links" role="button" data-toggle="modal">
         <div class="row-fluid">
             {%if item.image_first %}

@@ -24,7 +24,8 @@ class GravatarUrlNode(template.Node):
         except template.VariableDoesNotExist:
             return ''
 
-        default = "http://placehold.it/100"
+        #default = "http://placehold.it/100"
+        default = "http://www.codeodor.com/images/Empty_set.png"
         # size = 40
 
         gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"

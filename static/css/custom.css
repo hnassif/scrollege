@@ -101,6 +101,7 @@ a.no-links{
   padding:1px;
   border:thin solid black;
   }
+/*
 .Item { 
   background-color: #FF82AB;
 }
@@ -109,7 +110,8 @@ a.no-links{
 }
 .Housing { 
   background-color: #FFD700;
-}
+}*/
+
 .modal{
 height:80%;
 left: 50%;
@@ -134,7 +136,19 @@ body {
 
   margin-bottom: 0;
   text-align: right;
- 
-  
+}
+
+.buying {
+  background-color: #FF82AB;
+}
+
+.selling {
+  background-color: #C0C0C0; 
+}
+.gravatarDropdown {
+  *padding-top: 0px;
+  padding-right: 0px;
+  *padding-bottom: 0px;
+  padding-left: 0px;
 
 }
