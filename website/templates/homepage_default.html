@@ -10,7 +10,70 @@
 	{% empty %}
     	<h3 class="text-center">Sorry, no items found!</h3>
 {% endfor %}
-     
+
+
+<!--pagination -->
+<div class="pagination pagination-centered">    
+    <ul>    
+        {% if items.has_previous %}  
+            <li class="prev">
+                <a href="{{url_suffix|default:"?page="}}{{items.previous_page_number}}">{{previous_label|default:"&larr; Previous"}}</a>
+            </li>
+        {% else %}
+            <li class="prev disabled">
+                <a href="#">{{previous_label|default:"&larr; Previous"}}</a>
+            </li>
+        {% endif %}
+    {% for pagenum in items.paginator.page_range %}    
+        <li{% if items.number == pagenum %} class="active"{% endif %}>
+            <a href="{{url_suffix|default:"?page="}}{{pagenum}}">{{pagenum}}</a>
+        </li>
+    {% endfor %}
+    {% if hide_next != "true" %}
+        {% if items.has_next %}
+            <li class="next">
+                <a href="{{url_suffix|default:"?page="}}{{items.next_page_number}}">{{next_label|default:"Next &rarr;"}}</a>
+            </li>
+        {% else %}
+            <li class="next disabled">
+                <a href="#">{{next_label|default:"Next &rarr;"}}</a>
+            </li>
+        {% endif %} 
+    {% endif %}   
+    </ul> 
+</div>
+
+{% comment %}
+
+{% if is_paginated %}
+{% load i18n %}
+<div class="pagination">
+    <ul>
+    {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}{{ getvars }}{{ hashtag }}" class="prev">&lsaquo;&lsaquo; {% trans "previous" %}</a></li>
+    {% else %}
+        <li class="disabled prev"><a href="#">&lsaquo;&lsaquo; {% trans "previous" %}</a></li>
+    {% endif %}
+    {% for page in pages %}
+        {% if page %}
+            {% ifequal page page_obj.number %}
+                <li class="current page active"><a href="#">{{ page }}</a></li>
+            {% else %}
+                <li><a href="?page={{ page }}{{ getvars }}{{ hashtag }}" class="page">{{ page }}</a></li>
+            {% endifequal %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}" class="next">{% trans "next" %} &rsaquo;&rsaquo;</a></li>
+    {% else %}
+        <li class="disabled next"><a href="#">{% trans "next" %} &rsaquo;&rsaquo;</a></li>
+    {% endif %}
+    </ul>
+</div>
+{% endif %}
+{% endcomment %}
 {% endblock %}
 
 {% block tail %}
