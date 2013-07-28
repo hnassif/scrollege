@@ -28,12 +28,11 @@
             </div>
             {% endcomment %}
             {%if item.image_first %}
-            <div class="span4">
-                <div class="row">
+            <div class="span4">{# span4 #}
+                <div class="row"> {#row #}
                     <div class="span4">
                         <img alt="image" src="{{ item.image_first.url }}" class="hoverImages" />
                     </div>
-                    {% endif %}
                     {%if item.image_second %}
                     <div class="span4">       
                         <img alt="image" src="{{ item.image_second.url }}" class="hoverImages" />
@@ -43,8 +42,9 @@
                     <div class="span4">
                         <img alt="image_third" src="{{ item.image_third.url }}" class="hoverImages" />         
                     </div>
-                </div>
-            </div>
+                    {% endif %}
+                </div> {#end row#}
+            </div> {# end span4 #}
             {% endif %}
         </div>
     </a>
