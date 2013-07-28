@@ -57,8 +57,9 @@
     {% endblock %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">{{item.name|truncatechars:85}}<span class="permalink pull-right" style="font-size:11px;"><a href="/item/{{item.id}}">Permalink</a></span>
-</h3>
+        {% comment %}<h3 id="myModalLabel">{{item.name|truncatechars:85}}<span class="permalink pull-right" style="font-size:11px;"><a href="/item/{{item.id}}">Permalink</a></span>{% endcomment %}
+       <h3 id="myModalLabel">{{item.name|truncatechars:85}}</h3>
+       <h5 class="permalink " style="font-size:11px;"><a href="/item/{{item.id}}">Open in new tab</a></h5>
             </div>
     <div class="modal-body item-page">
         <div class="row-fluid">

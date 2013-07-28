@@ -119,14 +119,17 @@ left: 50%;
   max-height: 600px;
 
 }
-
+/*
 html {
   background-color: #ffd700;
 }
+*/
 
- body {
-  background-color:  #ffd700  ;
+
+body {
+  background-image:url('back.png');
 }
+
 .modal-footer {
 
   margin-bottom: 0;
