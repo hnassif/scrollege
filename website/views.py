@@ -24,10 +24,47 @@ from forms import RegForm, SignInForm, ItemForm, SearchForm, PasswordResetForm
 from models import Item, Message
 from django.core.mail import send_mail
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 def home(request):
-    q = Item.objects.all().order_by('timestamp').reverse()
-    return render_to_response('homepage_default.html', {'items': q, 'user': request.user})
+    queries_without_page = request.GET.copy()
+    q = request.GET.get('q')
+    items = Item.objects.filter(active = True).order_by('timestamp').reverse()
+        
+    if q:
+        items = items.filter(name__icontains=q) | \
+                Item.objects.filter(description__icontains=q)
+    # check for additional filters
+    if request.GET.get('need_or_sold'):
+        nos = request.GET.get('need_or_sold').strip()
+        if nos != 'unset' and nos != 'both':
+            # todo: this looks like it's wrong on the input end.
+            # had to reverse to achieve desired functionality
+            nos_filter= False if nos == 'needed' else True
+            items=items.filter(looking_for=nos_filter)
+    
+    if request.GET.get('category'):
+        cat = request.GET.get('category').strip()
+        if cat != 'unset' and cat != 'all':
+            items = items.filter(category__icontains=cat)
+
+    if queries_without_page.has_key('page'):
+        del queries_without_page['page']
+    
+    paginator = Paginator(items, 25) # Show 25 items per page
+    page = request.GET.get('page')
+    try:
+        items = paginator.page(page)
+    except PageNotAnInteger:
+        items = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        items = paginator.page(paginator.num_pages)
+    
+    return render_to_response('homepage_default.html', 
+            {'items': items, 'user': request.user,
+            'queries':queries_without_page})
 
 def sign_in(request):
     if request.user.is_authenticated():
