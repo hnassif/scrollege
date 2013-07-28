@@ -63,7 +63,7 @@
       </form>
       {% if user.is_authenticated %}
       <li class="dropdown">
-        <a href="#" role="button" class="dropdown-toggle gravatarDropdown" data-toggle="dropdown"><img src="{% gravatar_url user.email %}" class="img-polaroid clearfix" style="height:15px;width:15px" ></a>
+        <a href="#" role="button" class="dropdown-toggle gravatarDropdown" data-toggle="dropdown"><img src="{% gravatar_url user.email %}" class="img-polaroid " style="height:15px;width:15px" ></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="category-dropdown" id="category-dropdown-ul">
           <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "sign_out" %}">Sign Out</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Reset Password</a></li>
