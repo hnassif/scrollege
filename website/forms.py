@@ -141,18 +141,18 @@ class ItemForm(TeachForm):
 
 class PasswordResetForm(TeachForm):
 
-    old_Password= forms.CharField(
+    old_password= forms.CharField(
         required= True,
         widget=forms.PasswordInput(render_value=False)
         
     )
 
-    new_Password= forms.CharField(
+    new_password= forms.CharField(
         required= True,
         widget=forms.PasswordInput(render_value=False)
     )
 
-    confirm_New_Password= forms.CharField(
+    confirm_new_password= forms.CharField(
         required= True,
         widget=forms.PasswordInput(render_value=False)
     )

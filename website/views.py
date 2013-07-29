@@ -51,8 +51,11 @@ def home(request):
 
     if queries_without_page.has_key('page'):
         del queries_without_page['page']
-    
-    paginator = Paginator(items, 25) # Show 25 items per page
+
+
+    # max of 500 results
+    items = items[:100]
+    paginator = Paginator(items, 10) # Show 10 items per page
     page = request.GET.get('page')
     try:
         items = paginator.page(page)
@@ -212,26 +215,29 @@ def search(request):
 
 @csrf_exempt
 def reset_password(request):
-    feedback = []
+    feedback = {'status':None, 'data':None}
     if request.method == 'POST':
-        print "received password data"
+        print(request.POST)
         form = PasswordResetForm(request.POST)
         if form.is_valid():
-            print "form is valid"
-            old_Password=form.cleaned_data['old_Password']
-            new_Password=form.cleaned_data['new_Password']
-            confirm_New_Password=form.cleaned_data['confirm_New_Password']
+            old_Password=form.cleaned_data['old_password']
+            new_Password=form.cleaned_data['new_password']
+            confirm_New_Password=form.cleaned_data['confirm_new_password']
             if (new_Password == confirm_New_Password) and request.user.check_password(old_Password):
                 request.user.set_password(new_Password)
                 request.user.save()
-                feedback.append("password has been reset.")
+                feedback['status']='OK'
+                feedback['data']="Password has been reset successfully."
             else:
-                feedback.append("An Error occurred.")
+                feedback['status']='FAIL'
+                feedback['data']="An Error occurred. Password change unsuccessful."
         else:
-            feedback.append("An Error occurred.")
+            feedback['status']='FAIL'
+            feedback['data']="An Error occurred. Password change unsuccessful."
+            feedback['form'] = 'invalid'
 
-    form = PasswordResetForm()
-    return render_to_response('myProfile.html' , {'user': request.user, 'form': form, 'feedback':feedback})
+    return HttpResponse(json.dumps(feedback),content_type="application/json")
+
 
 
 def remove_listing(request):
@@ -278,14 +284,6 @@ def message_thread(request):
             x['timestamp'] = timesince(x['timestamp'])
         response = {'request':{'user_id':request.user.id},'data':list(thread_msgs)}
         return HttpResponse(json.dumps(response), content_type="application/json")
-
-# def msg_from_id(request):
-#     if request.method == "GET":
-#         msg = Message.objects.filter(pk=request.GET["id"])[0].jOb()
-#     else:
-#         msg = None
-#     return HttpResponse(json.dumps(msg),content_type="application/json")
-
 
 # @login_required
 @csrf_exempt
