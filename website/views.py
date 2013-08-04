@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db.models import Count
 import hashlib
 from django.db.models import Q
-from django.utils.timesince import timesince
+#from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
@@ -121,7 +121,7 @@ def post_item(request):
                 image_third= form.cleaned_data['image_third'],
                 looking_for = True if 'True' == form.cleaned_data['item_sellOrLookFor'] else False,
                 category = form.cleaned_data['item_category'],
-                price=form.cleaned_data['item_price'],
+                #price=form.cleaned_data['item_price'],
                 negotiable=form.cleaned_data['item_negotiable'],
                 owner=request.user,
                 description=form.cleaned_data['item_description']
@@ -147,7 +147,7 @@ def register(request):
     if request.method == 'POST':
         form = RegForm(request.POST)
         if form.is_valid():
-            if True or form.cleaned_data['email'].find('@mit.edu')!=-1:
+            if form.cleaned_data['email'].find('@sjsu.edu')!=-1:
                 user = User(
                     first_name=form.cleaned_data['firstname'],
                     last_name=form.cleaned_data['lastname'],
@@ -272,18 +272,19 @@ def item_messages(request):
 
 @login_required
 def message_thread(request):
-    if request.method == 'GET':
-        item_id = request.GET['item_id']
-        sender_id = request.GET['sender_id']
-        thread_msgs = Message.objects.filter(item_id=item_id).filter(
-            (Q(sender__id=sender_id)&Q(receiver=request.user))|(Q(sender__id=request.user.id)&(Q(receiver__id=sender_id)))).values(
-            'timestamp','sender__first_name','sender__last_name','sender__email','content').order_by('-timestamp')
+	return HttpResponse('')
+   # if request.method == 'GET':
+   #     item_id = request.GET['item_id']
+   #     sender_id = request.GET['sender_id']
+   #     thread_msgs = Message.objects.filter(item_id=item_id).filter(
+   #         (Q(sender__id=sender_id)&Q(receiver=request.user))|(Q(sender__id=request.user.id)&(Q(receiver__id=sender_id)))).values(
+   #         'timestamp','sender__first_name','sender__last_name','sender__email','content').order_by('-timestamp')
 
-        for x in thread_msgs:
-            x['sender__email'] = hashlib.md5(x['sender__email']).hexdigest()
-            x['timestamp'] = timesince(x['timestamp'])
-        response = {'request':{'user_id':request.user.id},'data':list(thread_msgs)}
-        return HttpResponse(json.dumps(response), content_type="application/json")
+   #     for x in thread_msgs:
+   #         x['sender__email'] = hashlib.md5(x['sender__email']).hexdigest()
+   #         x['timestamp'] = timesince(x['timestamp'])
+   #     response = {'request':{'user_id':request.user.id},'data':list(thread_msgs)}
+   #     return HttpResponse(json.dumps(response), content_type="application/json")
 
 # @login_required
 @csrf_exempt

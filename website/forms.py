@@ -106,15 +106,14 @@ class ItemForm(TeachForm):
         required = False,
         # widget = TagWidget((attrs={'placeholder': 'Comma separated'}),)
     )
-    item_price= forms.DecimalField(
-        required= True,
-        label = 'Price'
-    )
+    # item_price= forms.DecimalField(
+    #     required= True,
+    #     label = 'Price'
+    # )
     item_description= forms.CharField(
         required=False,
-        widget=forms.Textarea(attrs={'placeholder': 'Description of item'}),
-        label= 'Description',
-        help_text='Please include the price in your description'
+        widget=forms.Textarea(attrs={'placeholder': 'Please include the price in your description.'}),
+        label= 'Description'
     )
     item_negotiable= forms.BooleanField(
         required=False,
