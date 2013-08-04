@@ -201,7 +201,7 @@ def search(request):
             if nos != 'unset' and nos != 'both':
                 # todo: this looks like it's wrong on the input end.
                 # had to reverse to achieve desired functionality
-                nos_filter= False if nos == 'needed' else True
+                nos_filter= True if nos == 'needed' else False
                 items=items.filter(looking_for=nos_filter)
         if request.GET.get('category'):
             cat = request.GET.get('category').strip()
