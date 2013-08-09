@@ -167,7 +167,7 @@ def register(request):
                             login(request, user)
                     return HttpResponseRedirect('/')
             else:
-                form.addError("You did Not enter a valid MIT address")
+                form.addError("You did Not enter a valid email address")
     else:
         form = RegForm()
     return render_to_response(
@@ -318,8 +318,8 @@ def start_thead(request):
                     +temp_item.name+' \nPlease contact them to complete the transaction.\n'\
                     +'========================begin============================='+'\n\n'+message+'\n\n'\
                     +'========================+end+============================='
-                    send_mail(subject, full_message, 'mitpost-admin@mit.edu',
-                                    [temp_item.owner.email], fail_silently=False)
+                    send_mail(subject, full_message, 'no-reply@scrollege.com',
+                                    [temp_item.owner.email], fail_silently=True)
                 Message(
                     content = request.POST['message'].strip(),
                     sender = request.user,
