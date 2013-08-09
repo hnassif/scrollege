@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db.models import Count
 import hashlib
 from django.db.models import Q
-from django.utils.timesince import timesince
+#from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
 try: import simplejson as json
@@ -51,8 +51,11 @@ def home(request):
 
     if queries_without_page.has_key('page'):
         del queries_without_page['page']
-    
-    paginator = Paginator(items, 25) # Show 25 items per page
+
+
+    # max of 500 results
+    items = items[:100]
+    paginator = Paginator(items, 10) # Show 10 items per page
     page = request.GET.get('page')
     try:
         items = paginator.page(page)
@@ -118,7 +121,7 @@ def post_item(request):
                 image_third= form.cleaned_data['image_third'],
                 looking_for = True if 'True' == form.cleaned_data['item_sellOrLookFor'] else False,
                 category = form.cleaned_data['item_category'],
-                price=form.cleaned_data['item_price'],
+                #price=form.cleaned_data['item_price'],
                 negotiable=form.cleaned_data['item_negotiable'],
                 owner=request.user,
                 description=form.cleaned_data['item_description']
@@ -144,7 +147,7 @@ def register(request):
     if request.method == 'POST':
         form = RegForm(request.POST)
         if form.is_valid():
-            if True or form.cleaned_data['email'].find('@mit.edu')!=-1:
+            if form.cleaned_data['email'].find('@sjsu.edu')!=-1:
                 user = User(
                     first_name=form.cleaned_data['firstname'],
                     last_name=form.cleaned_data['lastname'],
@@ -164,7 +167,7 @@ def register(request):
                             login(request, user)
                     return HttpResponseRedirect('/')
             else:
-                form.addError("You did Not enter a valid MIT address")
+                form.addError("You did Not enter a valid email address")
     else:
         form = RegForm()
     return render_to_response(
@@ -198,7 +201,7 @@ def search(request):
             if nos != 'unset' and nos != 'both':
                 # todo: this looks like it's wrong on the input end.
                 # had to reverse to achieve desired functionality
-                nos_filter= False if nos == 'needed' else True
+                nos_filter= True if nos == 'needed' else False
                 items=items.filter(looking_for=nos_filter)
         if request.GET.get('category'):
             cat = request.GET.get('category').strip()
@@ -212,26 +215,29 @@ def search(request):
 
 @csrf_exempt
 def reset_password(request):
-    feedback = []
+    feedback = {'status':None, 'data':None}
     if request.method == 'POST':
-        print "received password data"
+        print(request.POST)
         form = PasswordResetForm(request.POST)
         if form.is_valid():
-            print "form is valid"
-            old_Password=form.cleaned_data['old_Password']
-            new_Password=form.cleaned_data['new_Password']
-            confirm_New_Password=form.cleaned_data['confirm_New_Password']
+            old_Password=form.cleaned_data['old_password']
+            new_Password=form.cleaned_data['new_password']
+            confirm_New_Password=form.cleaned_data['confirm_new_password']
             if (new_Password == confirm_New_Password) and request.user.check_password(old_Password):
                 request.user.set_password(new_Password)
                 request.user.save()
-                feedback.append("password has been reset.")
+                feedback['status']='OK'
+                feedback['data']="Password has been reset successfully."
             else:
-                feedback.append("An Error occurred.")
+                feedback['status']='FAIL'
+                feedback['data']="An Error occurred. Password change unsuccessful."
         else:
-            feedback.append("An Error occurred.")
+            feedback['status']='FAIL'
+            feedback['data']="An Error occurred. Password change unsuccessful."
+            feedback['form'] = 'invalid'
 
-    form = PasswordResetForm()
-    return render_to_response('myProfile.html' , {'user': request.user, 'form': form, 'feedback':feedback})
+    return HttpResponse(json.dumps(feedback),content_type="application/json")
+
 
 
 def remove_listing(request):
@@ -266,26 +272,19 @@ def item_messages(request):
 
 @login_required
 def message_thread(request):
-    if request.method == 'GET':
-        item_id = request.GET['item_id']
-        sender_id = request.GET['sender_id']
-        thread_msgs = Message.objects.filter(item_id=item_id).filter(
-            (Q(sender__id=sender_id)&Q(receiver=request.user))|(Q(sender__id=request.user.id)&(Q(receiver__id=sender_id)))).values(
-            'timestamp','sender__first_name','sender__last_name','sender__email','content').order_by('-timestamp')
+	return HttpResponse('')
+   # if request.method == 'GET':
+   #     item_id = request.GET['item_id']
+   #     sender_id = request.GET['sender_id']
+   #     thread_msgs = Message.objects.filter(item_id=item_id).filter(
+   #         (Q(sender__id=sender_id)&Q(receiver=request.user))|(Q(sender__id=request.user.id)&(Q(receiver__id=sender_id)))).values(
+   #         'timestamp','sender__first_name','sender__last_name','sender__email','content').order_by('-timestamp')
 
-        for x in thread_msgs:
-            x['sender__email'] = hashlib.md5(x['sender__email']).hexdigest()
-            x['timestamp'] = timesince(x['timestamp'])
-        response = {'request':{'user_id':request.user.id},'data':list(thread_msgs)}
-        return HttpResponse(json.dumps(response), content_type="application/json")
-
-# def msg_from_id(request):
-#     if request.method == "GET":
-#         msg = Message.objects.filter(pk=request.GET["id"])[0].jOb()
-#     else:
-#         msg = None
-#     return HttpResponse(json.dumps(msg),content_type="application/json")
-
+   #     for x in thread_msgs:
+   #         x['sender__email'] = hashlib.md5(x['sender__email']).hexdigest()
+   #         x['timestamp'] = timesince(x['timestamp'])
+   #     response = {'request':{'user_id':request.user.id},'data':list(thread_msgs)}
+   #     return HttpResponse(json.dumps(response), content_type="application/json")
 
 # @login_required
 @csrf_exempt
@@ -319,8 +318,8 @@ def start_thead(request):
                     +temp_item.name+' \nPlease contact them to complete the transaction.\n'\
                     +'========================begin============================='+'\n\n'+message+'\n\n'\
                     +'========================+end+============================='
-                    send_mail(subject, full_message, 'mitpost-admin@mit.edu',
-                                    [temp_item.owner.email], fail_silently=False)
+                    send_mail(subject, full_message, 'no-reply@scrollege.com',
+                                    [temp_item.owner.email], fail_silently=True)
                 Message(
                     content = request.POST['message'].strip(),
                     sender = request.user,

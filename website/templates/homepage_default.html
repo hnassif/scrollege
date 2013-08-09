@@ -79,16 +79,17 @@
 {% block tail %}
 {% if user.is_authenticated%}
 <script type="text/javascript">
-	$('.modal-footer .btn-primary').click(function(event){
+	$('.modal-body .btn-primary').not('.passModal, #password-reset-form').click(function(event){
+		console.log('found');
 		var msg = $(event.target.parentNode.parentNode).find('textarea').val();
 		var id = $(event.target.parentNode.parentNode).find('input[type=hidden]').attr("name");
 		$.post('/api/handshake',{message:msg, item_id:id},function(data){
 			console.log('successful');
 		});
 		$('#myModal'+id).modal('hide');
-	});
+	 });
 
-		$('.modal-footer .btn-primary').click(function(event){
+		$('.modal-body .btn-primary').not('.passModal, #password-reset-form').click(function(event){
 		var id = $(event.target.parentNode.parentNode).find('input[type=hidden]').attr("name");
 		$.post('/api/handshake',{item_id:id},function(data){
 			console.log('successful call for deleting item function');

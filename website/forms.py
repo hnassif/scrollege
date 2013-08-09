@@ -106,15 +106,14 @@ class ItemForm(TeachForm):
         required = False,
         # widget = TagWidget((attrs={'placeholder': 'Comma separated'}),)
     )
-    item_price= forms.DecimalField(
-        required= True,
-        label = 'Price'
-    )
+    # item_price= forms.DecimalField(
+    #     required= True,
+    #     label = 'Price'
+    # )
     item_description= forms.CharField(
         required=False,
-        widget=forms.Textarea(attrs={'placeholder': 'Description of item'}),
-        label= 'Description',
-        help_text='Please include the price in your description'
+        widget=forms.Textarea(attrs={'placeholder': 'Please include the price in your description.'}),
+        label= 'Description'
     )
     item_negotiable= forms.BooleanField(
         required=False,
@@ -141,18 +140,18 @@ class ItemForm(TeachForm):
 
 class PasswordResetForm(TeachForm):
 
-    old_Password= forms.CharField(
+    old_password= forms.CharField(
         required= True,
         widget=forms.PasswordInput(render_value=False)
         
     )
 
-    new_Password= forms.CharField(
+    new_password= forms.CharField(
         required= True,
         widget=forms.PasswordInput(render_value=False)
     )
 
-    confirm_New_Password= forms.CharField(
+    confirm_new_password= forms.CharField(
         required= True,
         widget=forms.PasswordInput(render_value=False)
     )
